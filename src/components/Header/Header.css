@@ -1,0 +1,117 @@
+.header {
+    width: 100%;
+    height: 80px;
+    padding: 0 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #ffffff;
+    border-bottom: 1px solid #eeeeee;
+    box-sizing: border-box;
+}
+
+.header-logo {
+    color: #222222;
+    font-family: "Times New Roman", serif;
+    font-size: 27px;
+    font-weight: 400;
+    letter-spacing: -1px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.header-logo span {
+    color: #78966c;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.header-nav a {
+    color: #333333;
+    font-size: 12px;
+    font-weight: 400;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.header-nav a:hover {
+    color: #78966c;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.header-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 20px;
+    height: 28px;
+    padding: 0;
+
+    background: none;
+    border: none;
+    color: #222222;
+    cursor: pointer;
+}
+
+.header-icon svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -9px;
+
+    width: 14px;
+    height: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #c97853;
+    color: #ffffff;
+    border-radius: 50%;
+
+    font-size: 9px;
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .header {
+        height: 68px;
+        padding: 0 20px;
+    }
+
+    .header-logo {
+        font-size: 24px;
+    }
+
+    .header-nav {
+        display: none;
+    }
+
+    .header-actions {
+        gap: 16px;
+    }
+}
