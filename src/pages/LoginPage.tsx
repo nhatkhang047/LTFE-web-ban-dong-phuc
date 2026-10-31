@@ -40,6 +40,10 @@ export default function LoginPage() {
           placeholder="Nhập mật khẩu của bạn"
         />
 
+        <Link className="auth-form__forgot-password" to="/quen-mat-khau">
+          Quên mật khẩu?
+        </Link>
+
         <button className="auth-form__submit" type="submit">
           Đăng nhập<span aria-hidden="true">→</span>
         </button>

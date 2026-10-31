@@ -216,6 +216,19 @@
     }
   }
 
+  &__forgot-password {
+    align-self: flex-end;
+    margin-top: -8px;
+    color: #254d45;
+    font-size: 13px;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
   &__submit {
     min-height: 50px;
     margin-top: 6px;
