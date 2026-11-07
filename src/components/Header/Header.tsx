@@ -16,7 +16,7 @@ export default function Header() {
       <nav className="header-nav" aria-label="Điều hướng chính">
         <a href="#">Mẫu mới</a>
         <a href="#">Bộ sưu tập</a>
-        <a href="/#san-pham" className="header-nav__link--active">Cửa hàng</a>
+        <Link to="/san-pham" className="header-nav__link--active">Cửa hàng</Link>
         <a href="#">Phụ kiện</a>
         <a href="#">Nhật ký</a>
         <a href="#">Ưu đãi</a>
