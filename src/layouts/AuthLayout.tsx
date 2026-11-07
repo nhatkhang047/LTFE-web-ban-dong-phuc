@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import uniformIllustration from '@/assets/uniform-illustration.svg';
 import './AuthLayout.scss';
 
@@ -6,7 +6,7 @@ export default function AuthLayout() {
   return (
     <div className="auth-page">
       <header className="auth-header">
-        <div className="auth-brand" aria-label="Đồng phục">
+        <Link to="/" className="auth-brand" aria-label="Đồng phục - về trang chủ">
           <span className="auth-brand__symbol" aria-hidden="true">
             <svg viewBox="0 0 32 32" fill="none">
               <path d="m11 6-7 4 3 7 4-2v12h10V15l4 2 3-7-7-4" />
@@ -16,7 +16,7 @@ export default function AuthLayout() {
           <span>
             đồng phục<span className="auth-brand__dot">.</span>
           </span>
-        </div>
+        </Link>
         <span className="auth-header__caption">Gắn kết từ những điều đồng điệu</span>
       </header>
 
