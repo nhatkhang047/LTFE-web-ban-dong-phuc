@@ -1,0 +1,251 @@
+.footer {
+    width: 100%;
+    background-color: #7f8d78;
+    color: #f5f5f0;
+    box-sizing: border-box;
+}
+
+.footer-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 40px 4% 40px;
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: 2.1fr 0.9fr 1.05fr 1fr 0.8fr;
+    column-gap: 35px;
+    padding-bottom: 50px;
+}
+
+.footer h3 {
+    margin: 0 0 15px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    line-height: 1.4;
+}
+
+/* Newsletter */
+.footer-newsletter p {
+    max-width: 350px;
+    margin: 0 0 20px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.footer-subscribe {
+    width: 100%;
+    max-width: 400px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-sizing: border-box;
+}
+
+.footer-subscribe input {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 0 15px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.footer-subscribe input::placeholder {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.footer-subscribe button {
+    width: 42px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.footer-subscribe button svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.footer-socials {
+    display: flex;
+    align-items: center;
+    gap: 19px;
+    margin-top: 27px;
+}
+
+.footer-socials a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f5f5f0;
+    transition: opacity 0.2s ease;
+}
+
+.footer-socials a:hover {
+    opacity: 0.65;
+}
+
+.footer-socials svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.footer-column ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.footer-column a {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 13px;
+    text-decoration: none;
+    line-height: 1.5;
+    transition: color 0.2s ease;
+}
+
+.footer-column a:hover,
+.footer-policies a:hover {
+    color: #ffffff;
+}
+
+.footer-brand {
+    text-align: right;
+}
+
+.footer-logo {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: #ffffff;
+    font-family: "Times New Roman", serif;
+    font-size: 30px;
+    text-decoration: none;
+    letter-spacing: -1px;
+}
+
+.footer-brand p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 35px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.footer-copyright {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 12px;
+}
+
+.footer-policies {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.footer-policies a {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 12px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+/* Responsive Tablet */
+@media (max-width: 1024px) {
+    .footer-top {
+        grid-template-columns: 1.5fr 1fr 1fr;
+        row-gap: 40px;
+    }
+
+    .footer-brand {
+        text-align: left;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        padding: 45px 24px 30px;
+    }
+
+    .footer-top {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 35px 20px;
+        padding-bottom: 35px;
+    }
+
+    .footer-newsletter {
+        grid-column: 1 / -1;
+    }
+
+    .footer-brand {
+        text-align: left;
+    }
+
+    .footer h3 {
+        font-size: 12px;
+        letter-spacing: 1.2px;
+    }
+
+    .footer-column a,
+    .footer-newsletter p,
+    .footer-brand p {
+        font-size: 12px;
+    }
+
+    .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 20px;
+        padding-top: 25px;
+    }
+
+    .footer-policies {
+        flex-wrap: wrap;
+        gap: 12px 20px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 380px) {
+    .footer-top {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-newsletter {
+        grid-column: auto;
+    }
+}
