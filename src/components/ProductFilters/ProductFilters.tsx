@@ -1,5 +1,6 @@
 import { useId, useState } from 'react';
 import { colorOptions, materialOptions, priceOptions, sizeOptions } from '@/mock/catalogFilters';
+import type { CatalogFilters } from '@/types/catalog';
 import './ProductFilters.scss';
 
 type FilterOption = {
@@ -32,14 +33,43 @@ function FilterSelect({ label, value, options, onChange }: FilterSelectProps) {
   );
 }
 
-export default function ProductFilters() {
+type ProductFiltersProps = {
+  filters: CatalogFilters;
+  onChange: (filters: CatalogFilters) => void;
+};
+
+export default function ProductFilters({ filters, onChange }: ProductFiltersProps) {
   const [areAllFiltersVisible, setAreAllFiltersVisible] = useState(false);
-  const [selectedColor, setSelectedColor] = useState('');
-  const [selectedMaterial, setSelectedMaterial] = useState('cashmere');
-  const [selectedPrice, setSelectedPrice] = useState('50-250');
-  const [selectedSize, setSelectedSize] = useState('M');
-  const [sortOrder, setSortOrder] = useState('featured');
-  const [gridColumns, setGridColumns] = useState(4);
+  const selectedColor = filters.color;
+  const selectedMaterial = filters.material;
+  const selectedPrice = filters.price;
+  const selectedSize = filters.size;
+  const sortOrder = filters.sortOrder;
+  const gridColumns = filters.gridColumns;
+
+  function setSelectedColor(color: string) {
+    onChange({ ...filters, color });
+  }
+
+  function setSelectedMaterial(material: string) {
+    onChange({ ...filters, material });
+  }
+
+  function setSelectedPrice(price: string) {
+    onChange({ ...filters, price });
+  }
+
+  function setSelectedSize(size: string) {
+    onChange({ ...filters, size });
+  }
+
+  function setSortOrder(sortOrder: string) {
+    onChange({ ...filters, sortOrder });
+  }
+
+  function setGridColumns(gridColumns: 2 | 4) {
+    onChange({ ...filters, gridColumns });
+  }
 
   const activeFilters = [];
 
@@ -63,10 +93,7 @@ export default function ProductFilters() {
   }
 
   function resetFilters() {
-    setSelectedColor('');
-    setSelectedMaterial('');
-    setSelectedPrice('');
-    setSelectedSize('');
+    onChange({ ...filters, color: '', material: '', price: '', size: '' });
   }
 
   function toggleAllFilters() {

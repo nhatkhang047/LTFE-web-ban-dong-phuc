@@ -1,11 +1,18 @@
+import { catalogProducts } from './catalogProducts';
+
 export const productCategories = [
-  { id: 'all', name: 'Tất cả sản phẩm', count: 84 },
-  { id: 'knitwear', name: 'Áo len & Cashmere', count: 24 },
-  { id: 'dresses', name: 'Váy đầm & Jumpsuit', count: 16 },
-  { id: 'bottoms', name: 'Quần dài & Chân váy', count: 18 },
-  { id: 'outerwear', name: 'Áo khoác & Blazer', count: 12 },
-  { id: 'accessories', name: 'Phụ kiện', count: 14 },
-];
+  { id: 'all', name: 'Tất cả sản phẩm' },
+  { id: 'knitwear', name: 'Áo len & Cashmere' },
+  { id: 'dresses', name: 'Váy đầm & Jumpsuit' },
+  { id: 'bottoms', name: 'Quần dài & Chân váy' },
+  { id: 'outerwear', name: 'Áo khoác & Blazer' },
+  { id: 'accessories', name: 'Phụ kiện' },
+].map((category) => ({
+  ...category,
+  count: category.id === 'all'
+    ? catalogProducts.length
+    : catalogProducts.filter((product) => product.category === category.id).length,
+}));
 
 export const colorOptions = [
   { value: '', label: 'Tất cả màu' },
@@ -23,6 +30,7 @@ export const materialOptions = [
   { value: 'linen', label: 'Linen' },
   { value: 'silk', label: 'Lụa' },
   { value: 'wool', label: 'Len' },
+  { value: 'leather', label: 'Da' },
 ];
 
 export const priceOptions = [
