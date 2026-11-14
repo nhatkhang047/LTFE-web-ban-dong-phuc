@@ -8,6 +8,7 @@ import HomePage from '@/pages/HomePage';
 import LoginPage from '@/pages/LoginPage';
 import ProductsPage from '@/pages/ProductsPage';
 import RegisterPage from '@/pages/RegisterPage';
+import UserProfilePage from '@/pages/UserProfilePage';
 
 
 import '@/styles/main.scss';
@@ -18,6 +19,7 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/yeu-thich" element={<FavoritesPage />} />
             <Route path="/gio-hang" element={<CartPage />} />
+            <Route path="/tai-khoan" element={<UserProfilePage />} />
             <Route element={<AuthLayout />}>
                 <Route path="/dang-nhap" element={<LoginPage />} />
                 <Route path="/dang-ky" element={<RegisterPage />} />
