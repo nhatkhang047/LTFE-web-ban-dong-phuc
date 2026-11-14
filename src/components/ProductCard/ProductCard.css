@@ -5,6 +5,16 @@
   flex-direction: column;
   cursor: pointer;
 }
+.product-card .product-image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.product-card .product-info-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
 .product-card .image-box {
   position: relative;
   width: 100%;
@@ -40,6 +50,7 @@
   color: #333333;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: all 0.2s ease;
+  z-index: 2;
 }
 .product-card .image-box .heart-btn svg {
   width: 19px;

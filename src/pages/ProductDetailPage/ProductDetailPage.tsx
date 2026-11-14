@@ -3,10 +3,35 @@ import { Link, useParams } from 'react-router-dom';
 
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
+import ProductCard from '@/components/ProductCard';
 
 import { catalogProducts } from '@/mock/catalogProducts';
 
 import './ProductDetailPage.scss';
+
+const mockReviews = [
+    {
+        id: 1,
+        name: 'Nguyễn Minh Anh',
+        rating: 5,
+        date: '10/11/2026',
+        comment: 'Sản phẩm rất đẹp, chất vải mềm và mặc rất thoải mái. Mình rất hài lòng với chất lượng.',
+    },
+    {
+        id: 2,
+        name: 'Trần Hoàng Nam',
+        rating: 4,
+        date: '08/11/2026',
+        comment: 'Form áo đẹp, đường may chắc chắn. Sản phẩm phù hợp để làm đồng phục công ty.',
+    },
+    {
+        id: 3,
+        name: 'Lê Thảo Vy',
+        rating: 5,
+        date: '05/11/2026',
+        comment: 'Màu sắc giống hình, giao diện sản phẩm rất đẹp. Sẽ tiếp tục ủng hộ VERDE.',
+    },
+];
 
 export default function ProductDetailPage() {
     const { id } = useParams<{ id: string }>();
@@ -56,6 +81,12 @@ export default function ProductDetailPage() {
     const productImages = product.images.length > 0
         ? product.images
         : [product.image];
+
+    const relatedProducts = catalogProducts
+        .filter((item) => {
+            return item.category === product.category && item.id !== product.id;
+        })
+        .slice(0, 4);
 
     const handleAddToCart = () => {
         if (!selectedSize) {
@@ -250,6 +281,68 @@ export default function ProductDetailPage() {
                         </div>
                     </div>
                 </section>
+
+                <section className="product-reviews">
+                    <div className="product-section-heading">
+                        <h2>Đánh giá khách hàng</h2>
+                        <p>Những chia sẻ từ khách hàng đã trải nghiệm sản phẩm</p>
+                    </div>
+
+                    <div className="product-reviews__summary">
+                        <div className="product-reviews__average">
+                            <strong>{product.rating.toFixed(1)}</strong>
+                            <span className="stars">★★★★★</span>
+                            <p>{product.reviewCount} đánh giá</p>
+                        </div>
+
+                        <div className="product-reviews__list">
+                            {mockReviews.map((review) => (
+                                <div className="product-review-item" key={review.id}>
+                                    <div className="product-review-item__top">
+                                        <div>
+                                            <h3>{review.name}</h3>
+                                            <span>{review.date}</span>
+                                        </div>
+
+                                        <span className="stars">
+                                            {'★'.repeat(review.rating)}
+                                            {'☆'.repeat(5 - review.rating)}
+                                        </span>
+                                    </div>
+                                    <p>{review.comment}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {relatedProducts.length > 0 && (
+                    <section className="related-products">
+                        <div className="product-section-heading">
+                            <h2>Sản phẩm liên quan</h2>
+                            <p>Khám phá thêm những sản phẩm cùng danh mục</p>
+                        </div>
+
+                        <div className="related-products__grid">
+                            {relatedProducts.map((item) => (
+                                <ProductCard
+                                    key={item.id}
+                                    id={item.id}
+                                    image={item.image}
+                                    name={item.name}
+                                    price={item.price}
+                                    colors={item.colors}
+                                />
+                            ))}
+                        </div>
+
+                        <div className="related-products__more">
+                            <Link to="/san-pham">
+                                Xem tất cả sản phẩm
+                            </Link>
+                        </div>
+                    </section>
+                )}
             </main>
 
             <Footer />
