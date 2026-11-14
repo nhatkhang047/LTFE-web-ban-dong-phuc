@@ -1,76 +1,148 @@
 import type { CatalogProduct } from '@/types/catalog';
-import cardiganImage from '@/assets/catalog/cardigan.svg';
-import jumpsuitImage from '@/assets/catalog/jumpsuit.svg';
-import slipDressImage from '@/assets/catalog/slip-dress.svg';
-import blazerImage from '@/assets/catalog/blazer.svg';
-import sweaterImage from '@/assets/catalog/sweater.svg';
-import knitDressImage from '@/assets/catalog/knit-dress.svg';
-import skirtImage from '@/assets/catalog/skirt.svg';
-import loafersImage from '@/assets/catalog/loafers.svg';
-import shirtImage from '@/assets/products/shirt.svg';
-import handbagImage from '@/assets/catalog/handbag.svg';
-import trousersImage from '@/assets/catalog/trousers.svg';
-import scarfImage from '@/assets/catalog/scarf.svg';
 
 export const catalogProducts: CatalogProduct[] = [
   {
-    id: 'ribbed-cardigan', name: 'Cardigan Cashmere Cổ Gân', image: cardiganImage, price: 229,
-    category: 'knitwear', material: 'cashmere', sizes: ['S', 'M', 'L', 'XL'], addedAt: '2026-10-01',
-    colors: [{ name: 'brown', value: '#665044' }, { name: 'cream', value: '#c9b28e' }, { name: 'black', value: '#30312e' }],
+    id: 1,
+    image: "https://www.dongphuctranganh.vn/media/photo/p159-953437.jpg",
+    name: "Áo polo đồng phục VERDE",
+    price: "189.000đ",
+    colors: ["#365349", "#e4dfcd", "#28364b"],
+    priceValue: 189000,
+    category: "polo",
+    material: "cotton",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    addedAt: "2026-11-14"
   },
   {
-    id: 'linen-jumpsuit', name: 'Quần Liền Ống Rộng Xếp Ly', image: jumpsuitImage, price: 89,
-    category: 'dresses', material: 'linen', sizes: ['XS', 'S', 'M', 'L'], addedAt: '2026-10-05',
-    colors: [{ name: 'cream', value: '#eee6d2' }, { name: 'green', value: '#7e886f' }, { name: 'black', value: '#30312e' }],
+    id: 2,
+    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600",
+    name: "Áo thun đồng phục cổ tròn",
+    price: "149.000đ",
+    colors: ["#f1eee4", "#343b3b", "#74856b"],
+    priceValue: 149000,
+    category: "tshirt",
+    material: "cotton",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    addedAt: "2026-11-12"
   },
   {
-    id: 'silk-slip-dress', name: 'Váy Hai Dây Satin Lụa', image: slipDressImage, price: 99,
-    category: 'dresses', material: 'silk', sizes: ['XS', 'S', 'M', 'L'], addedAt: '2026-10-09',
-    colors: [{ name: 'cream', value: '#c9b79b' }, { name: 'black', value: '#253842' }],
+    id: 3,
+    image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=600",
+    name: "Áo sơ mi đồng phục công sở",
+    price: "259.000đ",
+    colors: ["#f1eee4", "#bacbd7", "#28364b"],
+    priceValue: 259000,
+    category: "shirt",
+    material: "kate",
+    sizes: ["S", "M", "L", "XL"],
+    addedAt: "2026-11-10"
   },
   {
-    id: 'tailored-blazer', name: 'Áo Blazer Dáng Rộng May Đo', image: blazerImage, price: 129,
-    category: 'outerwear', material: 'wool', sizes: ['S', 'M', 'L', 'XL'], addedAt: '2026-10-12',
-    colors: [{ name: 'green', value: '#68756e' }, { name: 'brown', value: '#b49675' }, { name: 'black', value: '#30312e' }],
+    id: 4,
+    image: "https://milvus.com.vn/wp-content/uploads/2023/08/quan-tay-100.jpg",
+    name: "Quần tây đồng phục VERDE",
+    price: "320.000đ",
+    colors: ["#22252a", "#394b68", "#a6a6a6"],
+    priceValue: 320000,
+    category: "pants",
+    material: "kaki",
+    sizes: ["S", "M", "L", "XL"],
+    addedAt: "2026-11-09"
   },
   {
-    id: 'cashmere-sweater', name: 'Áo Len Cổ Tròn Cashmere Tối Giản', image: sweaterImage, price: 169,
-    category: 'knitwear', material: 'cashmere', sizes: ['S', 'M', 'L', 'XL', 'XXL'], addedAt: '2026-10-15',
-    colors: [{ name: 'brown', value: '#bb9c76' }, { name: 'cream', value: '#e0d6c5' }, { name: 'green', value: '#7a8570' }],
+    id: 5,
+    image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600",
+    name: "Quần jean VERDE",
+    price: "690.000đ",
+    colors: ["#394b68", "#22252a", "#a6a6a6"],
+    priceValue: 690000,
+    category: "pants",
+    material: "jean",
+    sizes: ["S", "M", "L", "XL"],
+    addedAt: "2026-11-08"
   },
   {
-    id: 'knit-midi-dress', name: 'Váy Len Dệt Phối Linen', image: knitDressImage, price: 199,
-    category: 'dresses', material: 'linen', sizes: ['XS', 'S', 'M', 'L'], addedAt: '2026-10-18',
-    colors: [{ name: 'cream', value: '#c5b79b' }, { name: 'brown', value: '#b16e47' }, { name: 'black', value: '#30312e' }],
+    id: 6,
+    image: "https://cf.shopee.vn/file/2cff37b3a3cf8bc0b3dbf61746c33de7",
+    name: "Áo sơ mi dài tay cao cấp",
+    price: "289.000đ",
+    colors: ["#f1eee4", "#b8c5d1", "#22252a"],
+    priceValue: 289000,
+    category: "shirt",
+    material: "kate",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    addedAt: "2026-11-07"
   },
   {
-    id: 'pleated-skirt', name: 'Chân Váy Xếp Ly Màu Rừng Sâu', image: skirtImage, price: 85,
-    category: 'bottoms', material: 'cotton', sizes: ['XS', 'S', 'M', 'L', 'XL'], addedAt: '2026-10-21',
-    colors: [{ name: 'green', value: '#52634b' }, { name: 'brown', value: '#b16643' }],
+    id: 7,
+    image: "https://mayphuongthao.com/wp-content/uploads/2022/09/ao-khoac-dong-dong-phuc-hoc-sinh-cap-2-2-scaled.jpg",
+    name: "Áo khoác đồng phục VERDE",
+    price: "450.000đ",
+    colors: ["#22252a", "#365349", "#a6a6a6"],
+    priceValue: 450000,
+    category: "jacket",
+    material: "polyester",
+    sizes: ["M", "L", "XL", "XXL"],
+    addedAt: "2026-11-06"
   },
   {
-    id: 'leather-loafers', name: 'Giày Loafer Da Ý Cao Cấp', image: loafersImage, price: 109,
-    category: 'accessories', material: 'leather', sizes: [], addedAt: '2026-10-23',
-    colors: [{ name: 'brown', value: '#684b36' }, { name: 'black', value: '#30312e' }],
+    id: 8,
+    image: "https://dongphucstore.com/wp-content/uploads/2022/06/tapdedaitrang01-1.jpg",
+    name: "Tạp dề đồng phục nhà hàng",
+    price: "129.000đ",
+    colors: ["#aa8568", "#4d6353", "#353c3a"],
+    priceValue: 129000,
+    category: "apron",
+    material: "canvas",
+    sizes: ["S", "M", "L"],
+    addedAt: "2026-11-05"
   },
   {
-    id: 'relaxed-shirt', name: 'Áo Sơ Mi Lụa Tằm Phom Rộng', image: shirtImage, price: 115,
-    category: 'tops', material: 'silk', sizes: ['XS', 'S', 'M', 'L', 'XL'], addedAt: '2026-10-26',
-    colors: [{ name: 'white', value: '#f1eee4' }, { name: 'green', value: '#7c8972' }],
+    id: 9,
+    image: "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-llzs8yu9mhgfd6",
+    name: "Áo polo đồng phục phối màu",
+    price: "219.000đ",
+    colors: ["#365349", "#f1eee4", "#22252a"],
+    priceValue: 219000,
+    category: "polo",
+    material: "cotton",
+    sizes: ["S", "M", "L", "XL"],
+    addedAt: "2026-11-04"
   },
   {
-    id: 'structured-handbag', name: 'Túi Xách Da Đeo Vai Cấu Trúc', image: handbagImage, price: 119,
-    category: 'accessories', material: 'leather', sizes: [], addedAt: '2026-10-29',
-    colors: [{ name: 'brown', value: '#946b48' }, { name: 'green', value: '#64745c' }],
+    id: 10,
+    image: "https://mayphuongthao.com/wp-content/uploads/2021/07/dong-phuc-truong-viet-duc-01.gif",
+    name: "Bộ đồng phục nhân viên VERDE",
+    price: "650.000đ",
+    colors: ["#394b68", "#22252a", "#e4dfcd"],
+    priceValue: 650000,
+    category: "set",
+    material: "polyester",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    addedAt: "2026-11-03"
   },
   {
-    id: 'relaxed-trousers', name: 'Quần Dài Linen Dây Rút Thoải Mái', image: trousersImage, price: 159,
-    category: 'bottoms', material: 'linen', sizes: ['S', 'M', 'L', 'XL', 'XXL'], addedAt: '2026-11-02',
-    colors: [{ name: 'cream', value: '#d1c2a5' }, { name: 'white', value: '#f1eee4' }, { name: 'green', value: '#64745c' }],
+    id: 11,
+    image: "https://img.muji.net/img/item/4550512659570_1260.jpg",
+    name: "Áo thun đồng phục dài tay",
+    price: "179.000đ",
+    colors: ["#f1eee4", "#365349", "#22252a"],
+    priceValue: 179000,
+    category: "tshirt",
+    material: "cotton",
+    sizes: ["S", "M", "L", "XL"],
+    addedAt: "2026-11-02"
   },
   {
-    id: 'cashmere-scarf', name: 'Khăn Choàng Du Lịch Cashmere', image: scarfImage, price: 129,
-    category: 'accessories', material: 'cashmere', sizes: [], addedAt: '2026-11-05',
-    colors: [{ name: 'black', value: '#75766f' }, { name: 'brown', value: '#b49675' }],
-  },
+    id: 12,
+    image: "https://dongphuchaianh.vn/wp-content/uploads/2024/12/dong-phuc-cong-ty-ao-khoac-mau-vang-phoi-dong-phuc-hai-anh.jpg",
+    name: "Áo khoác đồng phục công sở",
+    price: "790.000đ",
+    colors: ["#22252a", "#394b68", "#a6a6a6"],
+    priceValue: 790000,
+    category: "jacket",
+    material: "polyester",
+    sizes: ["M", "L", "XL"],
+    addedAt: "2026-11-01"
+  }
 ];

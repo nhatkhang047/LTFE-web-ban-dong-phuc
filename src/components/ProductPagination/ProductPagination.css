@@ -1,0 +1,64 @@
+.product-pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 72px;
+}
+.product-pagination__summary {
+  color: #939083;
+  font-size: 12px;
+}
+.product-pagination__progress {
+  width: 384px;
+  height: 4px;
+  margin: 20px 0 36px;
+  overflow: hidden;
+  background: #e8e6e0;
+}
+.product-pagination__progress span {
+  display: block;
+  height: 100%;
+  background: #63775a;
+  transition: width 180ms;
+}
+.product-pagination__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.product-pagination__number, .product-pagination__arrow {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 40px;
+  color: #77766c;
+  font-size: 12px;
+  transition: background-color 150ms, color 150ms;
+}
+.product-pagination__number:hover:not(:disabled), .product-pagination__arrow:hover:not(:disabled) {
+  background: #eeece5;
+  color: #374532;
+}
+.product-pagination__number:disabled, .product-pagination__arrow:disabled {
+  color: #c7c2b8;
+  cursor: default;
+}
+.product-pagination__number[aria-current=page] {
+  background: #30312c;
+  color: #fff;
+}
+.product-pagination__number[aria-current=page]:hover {
+  background: #30312c;
+  color: #fff;
+}
+.product-pagination__arrow svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/*# sourceMappingURL=ProductPagination.css.map */

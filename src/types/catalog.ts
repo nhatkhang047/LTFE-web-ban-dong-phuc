@@ -8,13 +8,14 @@ export type CatalogFilters = {
 };
 
 export type CatalogProduct = {
-  id: string;
-  name: string;
+  id: number;
   image: string;
-  price: number;
+  name: string;
+  price: string;
+  colors: string[];
+  priceValue: number;
   category: string;
   material: string;
   sizes: string[];
-  colors: { name: string; value: string }[];
   addedAt: string;
 };
