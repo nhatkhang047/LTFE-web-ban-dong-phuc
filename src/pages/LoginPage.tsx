@@ -1,6 +1,7 @@
 import { useEffect, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import PasswordInput from '@/components/PasswordInput';
+import { useNavigate } from 'react-router-dom';
 import googleIcon from '@/assets/google.svg';
 import facebookIcon from '@/assets/facebook.svg';
 
@@ -9,8 +10,12 @@ export default function LoginPage() {
     document.title = 'Đăng nhập | Đồng phục';
   }, []);
 
+  const navigate = useNavigate();
+
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    navigate("/san-pham");
   }
 
   return (
