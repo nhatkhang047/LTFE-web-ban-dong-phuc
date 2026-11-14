@@ -104,8 +104,8 @@ export default function ProductsPage() {
                     key={product.id}
                     image={product.image}
                     name={product.name}
-                    price={`$${product.price}`}
-                    colors={product.colors.map((color) => color.value)}
+                    price={product.price}
+                    colors={product.colors}
                   />
                 ))}
               </div>

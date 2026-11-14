@@ -1,52 +1,79 @@
 import type { CatalogFilters, CatalogProduct } from '@/types/catalog';
 
-export function getCatalogProducts(products: CatalogProduct[], filters: CatalogFilters, categoryId: string) {
+export function getCatalogProducts(
+    products: CatalogProduct[],
+    filters: CatalogFilters,
+    categoryId: string
+) {
   const filteredProducts = products.filter((product) => {
+    // Lọc danh mục
     if (categoryId !== 'all' && product.category !== categoryId) {
       return false;
     }
 
-    if (filters.color && !product.colors.some((color) => color.name === filters.color)) {
+    // Lọc màu sắc
+    if (filters.color && !product.colors.includes(filters.color)) {
       return false;
     }
 
+    // Lọc chất liệu
     if (filters.material && product.material !== filters.material) {
       return false;
     }
 
+    // Lọc kích cỡ
     if (filters.size && !product.sizes.includes(filters.size)) {
       return false;
     }
 
-    if (filters.price === 'under-50' && product.price >= 50) {
+    // Lọc khoảng giá
+    if (filters.price === 'under-200' && product.priceValue >= 200000) {
       return false;
     }
 
-    if (filters.price === '50-250' && (product.price < 50 || product.price > 250)) {
+    if (
+        filters.price === '200-400' &&
+        (product.priceValue < 200000 || product.priceValue > 400000)
+    ) {
       return false;
     }
 
-    if (filters.price === '250-500' && (product.price <= 250 || product.price > 500)) {
+    if (
+        filters.price === '400-700' &&
+        (product.priceValue < 400000 || product.priceValue > 700000)
+    ) {
       return false;
     }
 
-    if (filters.price === 'over-500' && product.price <= 500) {
+    if (filters.price === 'over-700' && product.priceValue <= 700000) {
       return false;
     }
 
     return true;
   });
 
+  // Sắp xếp theo giá tăng dần
   if (filters.sortOrder === 'price-ascending') {
-    filteredProducts.sort((firstProduct, secondProduct) => firstProduct.price - secondProduct.price);
+    filteredProducts.sort(
+        (firstProduct, secondProduct) =>
+            firstProduct.priceValue - secondProduct.priceValue
+    );
   }
 
+  // Sắp xếp theo giá giảm dần
   if (filters.sortOrder === 'price-descending') {
-    filteredProducts.sort((firstProduct, secondProduct) => secondProduct.price - firstProduct.price);
+    filteredProducts.sort(
+        (firstProduct, secondProduct) =>
+            secondProduct.priceValue - firstProduct.priceValue
+    );
   }
 
+  // Sắp xếp sản phẩm mới nhất
   if (filters.sortOrder === 'newest') {
-    filteredProducts.sort((firstProduct, secondProduct) => secondProduct.addedAt.localeCompare(firstProduct.addedAt));
+    filteredProducts.sort(
+        (firstProduct, secondProduct) =>
+            secondProduct.addedAt.localeCompare(firstProduct.addedAt)
+    );
   }
 
   return filteredProducts;
