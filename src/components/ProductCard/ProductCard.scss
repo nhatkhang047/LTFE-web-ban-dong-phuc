@@ -5,6 +5,18 @@
   flex-direction: column;
   cursor: pointer;
 
+  .product-image-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .product-info-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
   &__options {
     display: flex;
     align-items: center;
