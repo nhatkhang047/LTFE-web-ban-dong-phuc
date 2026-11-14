@@ -1,6 +1,21 @@
-import { RouterProvider } from "react-router-dom";
-import router from "@/router";
+import { Navigate, Route, Routes } from 'react-router-dom';
+import AuthLayout from '@/layouts/AuthLayout';
+import ForgotPasswordPage from '@/pages/ForgotPasswordPage';
+import HomePage from '@/pages/HomePage';
+import LoginPage from '@/pages/LoginPage';
+import RegisterPage from '@/pages/RegisterPage';
+import '@/styles/main.scss';
 
 export default function App() {
-    return <RouterProvider router={router} />;
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route element={<AuthLayout />}>
+        <Route path="/dang-nhap" element={<LoginPage />} />
+        <Route path="/dang-ky" element={<RegisterPage />} />
+        <Route path="/quen-mat-khau" element={<ForgotPasswordPage />} />
+        <Route path="*" element={<Navigate to="/dang-nhap" replace />} />
+      </Route>
+    </Routes>
+  );
 }

@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom';
 import "./Header.css";
 
 export default function Header() {
     return (
         <header className="header">
-            <a href="/" className="header-logo">VERDE</a>
+            <Link to="/" className="header-logo">VERDE</Link>
 
             <nav className="header-nav">
                 <a href="#">Hàng mới</a>
@@ -22,12 +23,12 @@ export default function Header() {
                     </svg>
                 </button>
 
-                <button className="header-icon" aria-label="Tài khoản">
+                <Link to="/dang-nhap" className="header-icon" aria-label="Đăng nhập tài khoản">
                     <svg viewBox="0 0 24 24">
                         <circle cx="12" cy="7.5" r="3.5" />
                         <path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2z" />
                     </svg>
-                </button>
+                </Link>
 
                 <button className="header-icon cart-icon" aria-label="Giỏ hàng">
                     <svg viewBox="0 0 24 24">
