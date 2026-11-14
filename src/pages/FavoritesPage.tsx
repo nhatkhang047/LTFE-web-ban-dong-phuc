@@ -47,6 +47,8 @@ export default function FavoritesPage() {
                   name={product.name}
                   price={product.price}
                   colors={product.colors}
+                  sizes={product.sizes}
+                  priceValue={product.priceValue}
                 />
               ))}
             </div>

@@ -14,12 +14,18 @@ function isFavoriteProduct(value: unknown): value is FavoriteProduct {
     || (typeof product.price === 'number' && Number.isFinite(product.price));
   const hasValidColors = product.colors === undefined
     || (Array.isArray(product.colors) && product.colors.every((color) => typeof color === 'string'));
+  const hasValidSizes = product.sizes === undefined
+    || (Array.isArray(product.sizes) && product.sizes.every((size) => typeof size === 'string'));
+  const hasValidPriceValue = product.priceValue === undefined
+    || (typeof product.priceValue === 'number' && Number.isSafeInteger(product.priceValue) && product.priceValue >= 0);
 
   return hasValidId
     && typeof product.image === 'string'
     && typeof product.name === 'string'
     && hasValidPrice
-    && hasValidColors;
+    && hasValidColors
+    && hasValidSizes
+    && hasValidPriceValue;
 }
 
 export function parseStoredFavorites(value: string | null): FavoriteProduct[] {

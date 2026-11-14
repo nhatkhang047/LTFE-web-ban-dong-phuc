@@ -5,6 +5,72 @@
   flex-direction: column;
   cursor: pointer;
 
+  &__options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 32px;
+  }
+
+  &__size {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #7d8175;
+    font-size: 11px;
+
+    select {
+      padding: 5px;
+      border: 1px solid #dedfd5;
+      border-radius: 3px;
+      background: #fff;
+      font-size: 11px;
+    }
+  }
+
+  &__add-to-cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 42px;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border: 1px solid #607354;
+    border-radius: 4px;
+    background: #52664b;
+    color: #fff;
+    font-size: 12px;
+
+    svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    &:hover:not(:disabled) {
+      background: #3d5038;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  &__cart-feedback {
+    min-height: 18px;
+    margin-top: 6px;
+    color: #607354;
+    font-size: 11px;
+    text-align: center;
+  }
+
   .image-box {
     position: relative;
     width: 100%;

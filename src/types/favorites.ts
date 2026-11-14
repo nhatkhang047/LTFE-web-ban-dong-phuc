@@ -4,4 +4,6 @@ export type FavoriteProduct = {
   name: string;
   price: string | number;
   colors?: string[];
+  sizes?: string[];
+  priceValue?: number;
 };
