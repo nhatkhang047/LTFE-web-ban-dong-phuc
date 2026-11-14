@@ -7,6 +7,7 @@ import MainLayout from '@/layouts/MainLayout';
 import ForgotPasswordPage from '@/pages/ForgotPasswordPage';
 import HomePage from '@/pages/HomePage';
 import LoginPage from '@/pages/LoginPage';
+import ProductsPage from '@/pages/ProductsPage';
 import RegisterPage from '@/pages/RegisterPage';
 import Products from '@/pages/Products/Products';
 
