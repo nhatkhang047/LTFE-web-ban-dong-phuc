@@ -7,9 +7,7 @@ export default function MainLayout() {
         <>
             <Header />
 
-            <main>
                 <Outlet />
-            </main>
 
             <Footer />
         </>
