@@ -18,4 +18,10 @@ export type CatalogProduct = {
   material: string;
   sizes: string[];
   addedAt: string;
+
+  // Thông tin chi tiết sản phẩm
+  images: string[];
+  description: string;
+  rating: number;
+  reviewCount: number;
 };

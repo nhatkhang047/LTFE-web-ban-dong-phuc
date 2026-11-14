@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import AuthLayout from '@/layouts/AuthLayout';
-
+import ProductDetailPage from '@/pages/ProductDetailPage/ProductDetailPage';
 import ForgotPasswordPage from '@/pages/ForgotPasswordPage';
 import HomePage from '@/pages/HomePage';
 import LoginPage from '@/pages/LoginPage';
@@ -19,7 +19,8 @@ export default function App() {
                 <Route path="/dang-ky" element={<RegisterPage />} />
                 <Route path="/quen-mat-khau" element={<ForgotPasswordPage />} />
             </Route>
-                <Route path="/san-pham" element={<ProductsPage />} />
+            <Route path="/san-pham" element={<ProductsPage />} />
+            <Route path="/san-pham/:id" element={<ProductDetailPage />} />
             <Route path="*" element={<Navigate to="/dang-nhap" replace />} />
         </Routes>
     );
