@@ -1,8 +1,11 @@
 import { type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { useFavorites } from '@/features/favorites/FavoritesContext';
 import './Header.css';
 
 export default function Header() {
+  const { favorites } = useFavorites();
+
   function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
   }
@@ -39,12 +42,16 @@ export default function Header() {
         </form>
 
         <div className="header-actions">
-          <button className="header-icon header-favorites" type="button" aria-label="Sản phẩm yêu thích, 3 sản phẩm">
+          <Link
+            to="/yeu-thich"
+            className="header-icon header-favorites"
+            aria-label={`Sản phẩm yêu thích, ${favorites.length} sản phẩm`}
+          >
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M20.5 5.5a5 5 0 0 0-7.1 0L12 6.9l-1.4-1.4a5 5 0 0 0-7.1 7.1L12 21l8.5-8.4a5 5 0 0 0 0-7.1Z" />
             </svg>
-            <span className="header-favorites__count" aria-hidden="true">3</span>
-          </button>
+            <span className="header-favorites__count" aria-hidden="true">{favorites.length}</span>
+          </Link>
 
           <Link to="/dang-nhap" className="header-icon" aria-label="Đăng nhập tài khoản">
             <svg viewBox="0 0 24 24" aria-hidden="true">
