@@ -17,11 +17,18 @@ type FilterSelectProps = {
 
 function FilterSelect({ label, value, options, onChange }: FilterSelectProps) {
   const selectId = useId();
+  const selectedOption = options.find((option) => option.value === value);
 
   return (
     <label className="catalog-filter-select" htmlFor={selectId}>
-      <span>{label}:</span>
-      <select id={selectId} value={value} onChange={(event) => onChange(event.target.value)}>
+      <span className="catalog-filter-select__label" aria-hidden="true">{label}:</span>
+      <span className="catalog-filter-select__value" aria-hidden="true">{selectedOption?.label}</span>
+      <select
+        id={selectId}
+        value={value}
+        aria-label={label}
+        onChange={(event) => onChange(event.target.value)}
+      >
         {options.map((option) => (
           <option key={option.value} value={option.value}>{option.label}</option>
         ))}
