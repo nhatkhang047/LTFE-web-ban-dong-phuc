@@ -1,15 +1,11 @@
 import { useState } from 'react';
+import { useFavorites } from '@/features/favorites/FavoritesContext';
+import type { FavoriteProduct } from '@/types/favorites';
 import './ProductCard.scss';
 
-interface ProductCardProps {
-  image: string;
-  name: string;
-  price: string | number;
-  colors?: string[];
-}
-
-function ProductCard(props: ProductCardProps) {
-  const [liked, setLiked] = useState(false);
+function ProductCard(props: FavoriteProduct) {
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const liked = isFavorite(props.id);
   const [selectedColor, setSelectedColor] = useState(0);
 
   const defaultColors = ['#c8c3bc', '#9d8067', '#5f696d', '#22252a'];
@@ -19,11 +15,7 @@ function ProductCard(props: ProductCardProps) {
   }
 
   function handleLike() {
-    if (liked === true) {
-      setLiked(false);
-    } else {
-      setLiked(true);
-    }
+    toggleFavorite({ ...props, colors });
   }
 
   function handleSelectColor(index: number) {
