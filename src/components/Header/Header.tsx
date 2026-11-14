@@ -1,8 +1,14 @@
 import { type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { useFavorites } from '@/features/favorites/FavoritesContext';
+import { useCart } from '@/features/cart/CartContext';
+import { formatCartPrice } from '@/utils/cart';
 import './Header.css';
 
 export default function Header() {
+  const { favorites } = useFavorites();
+  const { totalQuantity, totalPrice } = useCart();
+
   function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
   }
@@ -39,12 +45,16 @@ export default function Header() {
         </form>
 
         <div className="header-actions">
-          <button className="header-icon header-favorites" type="button" aria-label="Sản phẩm yêu thích, 3 sản phẩm">
+          <Link
+            to="/yeu-thich"
+            className="header-icon header-favorites"
+            aria-label={`Sản phẩm yêu thích, ${favorites.length} sản phẩm`}
+          >
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M20.5 5.5a5 5 0 0 0-7.1 0L12 6.9l-1.4-1.4a5 5 0 0 0-7.1 7.1L12 21l8.5-8.4a5 5 0 0 0 0-7.1Z" />
             </svg>
-            <span className="header-favorites__count" aria-hidden="true">3</span>
-          </button>
+            <span className="header-favorites__count" aria-hidden="true">{favorites.length}</span>
+          </Link>
 
           <Link to="/dang-nhap" className="header-icon" aria-label="Đăng nhập tài khoản">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -53,16 +63,20 @@ export default function Header() {
             </svg>
           </Link>
 
-          <button className="header-cart" type="button" aria-label="Giỏ hàng, 2 sản phẩm, tổng 458 đô la">
+          <Link
+            to="/gio-hang"
+            className="header-cart"
+            aria-label={`Giỏ hàng, ${totalQuantity} sản phẩm, tổng ${formatCartPrice(totalPrice)}`}
+          >
             <span className="header-cart__bag">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path className="header-cart__bag-body" d="M4 8h16l-1 13H5L4 8Z" />
                 <path d="M9 9V6a3 3 0 0 1 6 0v3" />
               </svg>
-              <span className="header-cart__count" aria-hidden="true">2</span>
+              <span className="header-cart__count" aria-hidden="true">{totalQuantity}</span>
             </span>
-            <span className="header-cart__total" aria-hidden="true">$458</span>
-          </button>
+            <span className="header-cart__total" aria-hidden="true">{formatCartPrice(totalPrice)}</span>
+          </Link>
         </div>
       </div>
     </header>
