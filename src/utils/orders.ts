@@ -1,4 +1,4 @@
-import type { Order, OrderItem, OrderStatus } from '@/types/order';
+import type { Order, OrderItem, OrderStatus, OrderStatusFilter } from '@/types/order';
 
 export const ordersStorageKey = 'verde-orders';
 
@@ -234,4 +234,37 @@ export function replaceOrder(orders: readonly Order[], updatedOrder: Order): Ord
   }
 
   return orders.map((order) => order.id === updatedOrder.id ? cloneOrder(updatedOrder) : order);
+}
+
+function normalizeOrderSearch(value: string) {
+  return value.trim().toLocaleLowerCase('vi-VN').normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
+}
+
+export function getFilteredOrders(orders: readonly Order[], status: OrderStatusFilter, searchQuery: string): Order[] {
+  const query = normalizeOrderSearch(searchQuery);
+
+  return orders.filter((order) => {
+    if (status !== 'all' && order.status !== status) {
+      return false;
+    }
+
+    if (!query) {
+      return true;
+    }
+
+    return normalizeOrderSearch(order.code).includes(query)
+      || order.items.some((item) => normalizeOrderSearch(item.name).includes(query));
+  }).sort((firstOrder, secondOrder) => Date.parse(secondOrder.createdAt) - Date.parse(firstOrder.createdAt));
+}
+
+export function formatOrderDate(value: string) {
+  return new Intl.DateTimeFormat('vi-VN', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Asia/Bangkok',
+  }).format(new Date(value));
 }

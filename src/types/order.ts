@@ -1,5 +1,7 @@
 export type OrderStatus = 'pending' | 'processing' | 'shipping' | 'delivered' | 'cancelled';
 
+export type OrderStatusFilter = 'all' | OrderStatus;
+
 export type OrderPaymentMethod = 'cod' | 'bank_transfer';
 
 export type OrderPaymentStatus = 'unpaid' | 'paid';
