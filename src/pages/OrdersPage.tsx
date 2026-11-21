@@ -167,7 +167,13 @@ export default function OrdersPage() {
                         </div>
                         <div className="order-card__actions">
                           <p>Tổng tiền <strong>{formatCartPrice(order.totalAmount)}</strong></p>
-                          <button type="button" disabled aria-label={`Xem chi tiết đơn ${order.code}`}>Xem chi tiết</button>
+                          <Link
+                            className="order-card__detail-link"
+                            to={`/don-hang/${encodeURIComponent(order.id)}`}
+                            aria-label={`Xem chi tiết đơn ${order.code}`}
+                          >
+                            Xem chi tiết
+                          </Link>
                         </div>
                       </div>
                     </article>

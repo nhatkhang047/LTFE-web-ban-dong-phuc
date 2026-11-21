@@ -1,4 +1,4 @@
-import type { OrderStatus, OrderStatusFilter } from '@/types/order';
+import type { OrderPaymentMethod, OrderPaymentStatus, OrderStatus, OrderStatusFilter } from '@/types/order';
 
 export const orderStatusLabels: Record<OrderStatus, string> = {
   pending: 'Chờ xác nhận',
@@ -16,3 +16,13 @@ export const orderStatusFilters: { value: OrderStatusFilter; label: string }[] =
   { value: 'delivered', label: orderStatusLabels.delivered },
   { value: 'cancelled', label: orderStatusLabels.cancelled },
 ];
+
+export const orderPaymentMethodLabels: Record<OrderPaymentMethod, string> = {
+  cod: 'Thanh toán khi nhận hàng',
+  bank_transfer: 'Chuyển khoản ngân hàng',
+};
+
+export const orderPaymentStatusLabels: Record<OrderPaymentStatus, string> = {
+  unpaid: 'Chưa thanh toán',
+  paid: 'Đã thanh toán',
+};

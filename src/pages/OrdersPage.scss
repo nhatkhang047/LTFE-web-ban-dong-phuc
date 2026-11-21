@@ -246,7 +246,10 @@
       font-weight: 600;
     }
 
-    button {
+    .order-card__detail-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       min-height: 42px;
       padding: 10px 20px;
       border: 1px solid #d8decf;
@@ -255,9 +258,10 @@
       color: #66765b;
       font-size: 0.875rem;
 
-      &:disabled {
-        opacity: 0.55;
-        cursor: default;
+      &:hover {
+        border-color: #829573;
+        background: #eaf0e2;
+        color: #435b35;
       }
     }
   }
