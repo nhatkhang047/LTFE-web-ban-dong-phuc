@@ -198,3 +198,47 @@
   outline: 2px solid #718567;
   outline-offset: 4px;
 }
+
+/* Login and Register buttons */
+
+.header-auth {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.header-auth a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 15px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.header-auth__login {
+  border: 1px solid #617359;
+  background: transparent;
+  color: #52634b;
+}
+
+.header-auth__login:hover {
+  background: #f0f2ed;
+}
+
+.header-auth__register {
+  border: 1px solid #52634b;
+  background: #52634b;
+  color: #fff;
+}
+
+.header-auth__register:hover {
+  border-color: #34472d;
+  background: #34472d;
+  color: #fff;
+}

@@ -16,8 +16,8 @@ type ProfileData = {
 };
 
 const initialProfile: ProfileData = {
-    name: 'Nhật Quân',
-    email: '23130257@st.hcmuaf.edu.vn',
+    name: 'name',
+    email: 'example@gmail.com',
     phone: '',
     birthday: '',
     gender: '',
