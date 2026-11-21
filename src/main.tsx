@@ -5,6 +5,7 @@ import App from './App';
 import { FavoritesProvider } from '@/features/favorites/FavoritesContext';
 import { CartProvider } from '@/features/cart/CartContext';
 import { AuthProvider } from '@/features/auth/AuthContext';
+import { OrdersProvider } from '@/features/orders/OrdersContext';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
@@ -12,7 +13,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <AuthProvider>
                 <FavoritesProvider>
                     <CartProvider>
-                        <App />
+                        <OrdersProvider>
+                            <App />
+                        </OrdersProvider>
                     </CartProvider>
                 </FavoritesProvider>
             </AuthProvider>
