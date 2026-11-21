@@ -8,7 +8,7 @@ import HomePage from '@/pages/HomePage';
 import LoginPage from '@/pages/LoginPage';
 import ProductsPage from '@/pages/ProductsPage';
 import RegisterPage from '@/pages/RegisterPage';
-import ProfilePage from '@/pages/ProfilePage/ProfilePage';
+import UserProfilePage from '@/pages/UserProfilePage';
 
 
 import '@/styles/main.scss';
