@@ -1,6 +1,7 @@
 import { useId, useState } from 'react';
 import { useFavorites } from '@/features/favorites/FavoritesContext';
 import { useCart } from '@/features/cart/CartContext';
+import { Link } from 'react-router-dom';
 import type { FavoriteProduct } from '@/types/favorites';
 import { getProductPrice } from '@/utils/cart';
 import './ProductCard.scss';
@@ -52,7 +53,9 @@ function ProductCard(props: FavoriteProduct) {
   return (
     <div className="product-card">
       <div className="image-box">
-        <img src={props.image} alt={props.name} loading="lazy" width="360" height="480" />
+        <Link to={`/san-pham/${props.id}`} className="product-image-link" aria-label={`Xem chi tiết ${props.name}`}>
+          <img src={props.image} alt={props.name} loading="lazy" width="360" height="480"/>
+        </Link>
         <button
           className={heartButtonClass}
           type="button"
@@ -67,8 +70,10 @@ function ProductCard(props: FavoriteProduct) {
       </div>
 
       <div className="info-box">
-        <h3 className="product-name">{props.name}</h3>
-        <p className="product-price">{props.price}</p>
+        <Link to={`/san-pham/${props.id}`} className="product-info-link">
+          <h3 className="product-name">{props.name}</h3>
+          <p className="product-price">{props.price}</p>
+        </Link>
 
         <div className="product-card__options">
           <div className="color-list">

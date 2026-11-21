@@ -4,17 +4,20 @@ import PasswordInput from '@/components/PasswordInput';
 import { useNavigate } from 'react-router-dom';
 import googleIcon from '@/assets/google.svg';
 import facebookIcon from '@/assets/facebook.svg';
+import { useAuth } from '@/features/auth/AuthContext';
 
 export default function LoginPage() {
   useEffect(() => {
     document.title = 'Đăng nhập | Đồng phục';
   }, []);
 
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    login();
     navigate("/san-pham");
   }
 
