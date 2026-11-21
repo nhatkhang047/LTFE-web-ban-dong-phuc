@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import { useFavorites } from '@/features/favorites/FavoritesContext';
 import { useCart } from '@/features/cart/CartContext';
 import { formatCartPrice } from '@/utils/cart';
+import { useAuth } from '@/features/auth/AuthContext';
 import './Header.css';
 
 export default function Header() {
   const { favorites } = useFavorites();
   const { totalQuantity, totalPrice } = useCart();
+  const { isAuthenticated } = useAuth();
 
   function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -77,6 +79,29 @@ export default function Header() {
             </span>
             <span className="header-cart__total" aria-hidden="true">{formatCartPrice(totalPrice)}</span>
           </Link>
+
+          {isAuthenticated ? (
+              <Link
+                  to="/tai-khoan"
+                  className="header-icon"
+                  aria-label="Thông tin tài khoản"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="7.5" r="3.5" />
+                  <path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2Z" />
+                </svg>
+              </Link>
+          ) : (
+              <div className="header-auth">
+                <Link to="/dang-nhap" className="header-auth__login">
+                  Đăng nhập
+                </Link>
+
+                <Link to="/dang-ky" className="header-auth__register">
+                  Đăng ký
+                </Link>
+              </div>
+          )}
         </div>
       </div>
     </header>

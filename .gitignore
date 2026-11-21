@@ -24,3 +24,9 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Build output
+dist/
+
+# Compiled CSS from SCSS
+src/**/*.css.map

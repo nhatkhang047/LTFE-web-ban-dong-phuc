@@ -11,7 +11,15 @@ export const catalogProducts: CatalogProduct[] = [
     category: "polo",
     material: "cotton",
     sizes: ["S", "M", "L", "XL", "XXL"],
-    addedAt: "2026-11-14"
+    addedAt: "2026-11-14",
+
+    images: [
+      "https://www.dongphuctranganh.vn/media/photo/p159-953437.jpg",
+      "https://www.dongphuctranganh.vn/media/photo/p159-953437.jpg"
+    ],
+    description: "Áo polo đồng phục VERDE được thiết kế theo phong cách tối giản, phù hợp với môi trường công sở và hoạt động tập thể. Chất liệu cotton tạo cảm giác thoải mái khi sử dụng.",
+    rating: 4.8,
+    reviewCount: 25
   },
   {
     id: 2,
@@ -23,7 +31,14 @@ export const catalogProducts: CatalogProduct[] = [
     category: "tshirt",
     material: "cotton",
     sizes: ["S", "M", "L", "XL", "XXL"],
-    addedAt: "2026-11-12"
+    addedAt: "2026-11-12",
+    images: [
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600",
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600"
+    ],
+    description: "Áo thun đồng phục cổ tròn được thiết kế theo phong cách tối giản, phù hợp với môi trường công sở và hoạt động tập thể. Chất liệu cotton tạo cảm giác thoải mái khi sử dụng.",
+    rating: 4.8,
+    reviewCount: 25
   },
   {
     id: 3,
@@ -35,7 +50,14 @@ export const catalogProducts: CatalogProduct[] = [
     category: "shirt",
     material: "kate",
     sizes: ["S", "M", "L", "XL"],
-    addedAt: "2026-11-10"
+    addedAt: "2026-11-10",
+    images: [
+      "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=600",
+      "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?w=600"
+    ],
+    description: "Áo sơ mi đồng phục công sở được thiết kế theo phong cách tối giản, phù hợp với môi trường công sở và hoạt động tập thể. Chất liệu cotton tạo cảm giác thoải mái khi sử dụng.",
+    rating: 4.8,
+    reviewCount: 25
   },
   {
     id: 4,
@@ -47,7 +69,14 @@ export const catalogProducts: CatalogProduct[] = [
     category: "pants",
     material: "kaki",
     sizes: ["S", "M", "L", "XL"],
-    addedAt: "2026-11-09"
+    addedAt: "2026-11-09",
+    images: [
+      "https://milvus.com.vn/wp-content/uploads/2023/08/quan-tay-100.jpg",
+      "https://milvus.com.vn/wp-content/uploads/2023/08/quan-tay-100.jpg"
+    ],
+    description: "Quần tây đồng phục VERDE được thiết kế theo phong cách tối giản, phù hợp với môi trường công sở và hoạt động tập thể. Chất liệu cotton tạo cảm giác thoải mái khi sử dụng.",
+    rating: 4.8,
+    reviewCount: 25
   },
   {
     id: 5,
@@ -59,7 +88,14 @@ export const catalogProducts: CatalogProduct[] = [
     category: "pants",
     material: "jean",
     sizes: ["S", "M", "L", "XL"],
-    addedAt: "2026-11-08"
+    addedAt: "2026-11-08",
+    images: [
+      "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600",
+      "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600"
+    ],
+    description: "Quần jean VERDE được thiết kế theo phong cách tối giản, phù hợp với môi trường công sở và hoạt động tập thể. Chất liệu cotton tạo cảm giác thoải mái khi sử dụng.",
+    rating: 4.8,
+    reviewCount: 25
   },
   {
     id: 6,
@@ -71,7 +107,14 @@ export const catalogProducts: CatalogProduct[] = [
     category: "shirt",
     material: "kate",
     sizes: ["S", "M", "L", "XL", "XXL"],
-    addedAt: "2026-11-07"
+    addedAt: "2026-11-07",
+    images: [
+      "https://cf.shopee.vn/file/2cff37b3a3cf8bc0b3dbf61746c33de7",
+      "https://cf.shopee.vn/file/2cff37b3a3cf8bc0b3dbf61746c33de7"
+    ],
+    description: "Áo sơ mi dài tay cao cấp được thiết kế theo phong cách tối giản, phù hợp với môi trường công sở và hoạt động tập thể. Chất liệu cotton tạo cảm giác thoải mái khi sử dụng.",
+    rating: 4.8,
+    reviewCount: 25
   },
   {
     id: 7,
@@ -83,7 +126,14 @@ export const catalogProducts: CatalogProduct[] = [
     category: "jacket",
     material: "polyester",
     sizes: ["M", "L", "XL", "XXL"],
-    addedAt: "2026-11-06"
+    addedAt: "2026-11-06",
+    images: [
+      "https://mayphuongthao.com/wp-content/uploads/2022/09/ao-khoac-dong-dong-phuc-hoc-sinh-cap-2-2-scaled.jpg",
+      "https://mayphuongthao.com/wp-content/uploads/2022/09/ao-khoac-dong-dong-phuc-hoc-sinh-cap-2-2-scaled.jpg"
+    ],
+    description: "Áo khoác đồng phục VERDE được thiết kế theo phong cách tối giản, phù hợp với môi trường công sở và hoạt động tập thể. Chất liệu cotton tạo cảm giác thoải mái khi sử dụng.",
+    rating: 4.8,
+    reviewCount: 25
   },
   {
     id: 8,
@@ -95,7 +145,14 @@ export const catalogProducts: CatalogProduct[] = [
     category: "apron",
     material: "canvas",
     sizes: ["S", "M", "L"],
-    addedAt: "2026-11-05"
+    addedAt: "2026-11-05",
+    images: [
+      "https://dongphucstore.com/wp-content/uploads/2022/06/tapdedaitrang01-1.jpg",
+      "https://dongphucstore.com/wp-content/uploads/2022/06/tapdedaitrang01-1.jpg"
+    ],
+    description: "Tạp dề đồng phục nhà hàng được thiết kế theo phong cách tối giản, phù hợp với môi trường công sở và hoạt động tập thể. Chất liệu cotton tạo cảm giác thoải mái khi sử dụng.",
+    rating: 4.8,
+    reviewCount: 25
   },
   {
     id: 9,
@@ -107,7 +164,14 @@ export const catalogProducts: CatalogProduct[] = [
     category: "polo",
     material: "cotton",
     sizes: ["S", "M", "L", "XL"],
-    addedAt: "2026-11-04"
+    addedAt: "2026-11-04",
+    images: [
+      "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-llzs8yu9mhgfd6",
+      "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-llzs8yu9mhgfd6"
+    ],
+    description: "Áo polo đồng phục phối màu được thiết kế theo phong cách tối giản, phù hợp với môi trường công sở và hoạt động tập thể. Chất liệu cotton tạo cảm giác thoải mái khi sử dụng.",
+    rating: 4.8,
+    reviewCount: 25
   },
   {
     id: 10,
@@ -119,7 +183,14 @@ export const catalogProducts: CatalogProduct[] = [
     category: "set",
     material: "polyester",
     sizes: ["S", "M", "L", "XL", "XXL"],
-    addedAt: "2026-11-03"
+    addedAt: "2026-11-03",
+    images: [
+      "https://mayphuongthao.com/wp-content/uploads/2021/07/dong-phuc-truong-viet-duc-01.gif",
+      "https://mayphuongthao.com/wp-content/uploads/2021/07/dong-phuc-truong-viet-duc-01.gif"
+    ],
+    description: "Áo đồng phục nhân viên VERDE được thiết kế theo phong cách tối giản, phù hợp với môi trường công sở và hoạt động tập thể. Chất liệu cotton tạo cảm giác thoải mái khi sử dụng.",
+    rating: 4.8,
+    reviewCount: 25
   },
   {
     id: 11,
@@ -131,7 +202,14 @@ export const catalogProducts: CatalogProduct[] = [
     category: "tshirt",
     material: "cotton",
     sizes: ["S", "M", "L", "XL"],
-    addedAt: "2026-11-02"
+    addedAt: "2026-11-02",
+    images: [
+      "https://img.muji.net/img/item/4550512659570_1260.jpg",
+      "https://img.muji.net/img/item/4550512659570_1260.jpg"
+    ],
+    description: "Áo polo đồng phục VERDE được thiết kế theo phong cách tối giản, phù hợp với môi trường công sở và hoạt động tập thể. Chất liệu cotton tạo cảm giác thoải mái khi sử dụng.",
+    rating: 4.8,
+    reviewCount: 25
   },
   {
     id: 12,
@@ -143,6 +221,13 @@ export const catalogProducts: CatalogProduct[] = [
     category: "jacket",
     material: "polyester",
     sizes: ["M", "L", "XL"],
-    addedAt: "2026-11-01"
+    addedAt: "2026-11-01",
+    images: [
+      "https://dongphuchaianh.vn/wp-content/uploads/2024/12/dong-phuc-cong-ty-ao-khoac-mau-vang-phoi-dong-phuc-hai-anh.jpg",
+      "https://dongphuchaianh.vn/wp-content/uploads/2024/12/dong-phuc-cong-ty-ao-khoac-mau-vang-phoi-dong-phuc-hai-anh.jpg"
+    ],
+    description: "Áo khoác đồng phục công sở được thiết kế theo phong cách tối giản, phù hợp với môi trường công sở và hoạt động tập thể. Chất liệu cotton tạo cảm giác thoải mái khi sử dụng.",
+    rating: 4.8,
+    reviewCount: 25
   }
 ];

@@ -19,9 +19,9 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 40px;
+  min-height: 44px;
   padding: 9px 14px;
-  border-radius: 5px;
+  border-radius: 8px;
   background: #2f302b;
   color: #fff;
   font-size: 11px;
@@ -51,7 +51,7 @@
   flex-shrink: 0;
   gap: 14px;
 }
-.catalog-filters__display .catalog-filter-select > span {
+.catalog-filters__display .catalog-filter-select__label {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -73,6 +73,9 @@
   border: 1px solid #e8e5de;
   border-radius: 6px;
   background: #f3f2ed;
+}
+.catalog-filters__panel:not([hidden]) .catalog-filter-select {
+  min-width: 0;
 }
 .catalog-filters__selected {
   display: flex;
@@ -100,41 +103,69 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  min-height: 40px;
-  padding: 0 12px;
+  gap: 6px;
+  min-width: 160px;
+  min-height: 44px;
+  padding: 10px 36px 10px 14px;
   border: 1px solid #e6e3dd;
-  border-radius: 5px;
+  border-radius: 8px;
   background: #fff;
   color: #64635c;
   font-size: 11px;
   white-space: nowrap;
+  cursor: pointer;
+  transition: border-color 150ms, box-shadow 150ms, background-color 150ms;
 }
-.catalog-filter-select select {
+.catalog-filter-select__label {
+  flex-shrink: 0;
+  color: #929083;
+}
+.catalog-filter-select__value {
   flex: 1;
   min-width: 0;
-  height: 38px;
-  padding: 0 20px 0 0;
+  overflow: hidden;
+  color: #4d5746;
+  text-overflow: ellipsis;
+}
+.catalog-filter-select select {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0 14px;
   border: none;
-  border-radius: 4px;
+  border-radius: inherit;
+  outline: none;
   appearance: none;
-  background: transparent;
-  font-size: 11px;
+  background: #fff;
+  font-size: 12px;
+  opacity: 0;
   cursor: pointer;
 }
 .catalog-filter-select > svg {
   position: absolute;
-  right: 10px;
-  width: 12px;
-  height: 12px;
-  stroke: #9e9b91;
+  right: 14px;
+  width: 14px;
+  height: 14px;
+  stroke: #8b937f;
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
   pointer-events: none;
 }
+.catalog-filter-select:hover {
+  border-color: #bdc7b4;
+  background: #fdfefa;
+}
 .catalog-filter-select:focus-within {
-  border-color: #8e9c85;
+  border-color: #829573;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(115, 133, 107, 0.0941176471);
+}
+.catalog-page .catalog-filter-select select:focus-visible {
+  outline: none;
 }
 
 .catalog-grid-toggle {
@@ -142,14 +173,14 @@
   flex-shrink: 0;
   padding: 3px;
   border: 1px solid #e8e5de;
-  border-radius: 5px;
+  border-radius: 8px;
   background: #fff;
 }
 .catalog-grid-toggle button {
   display: grid;
   place-items: center;
   width: 29px;
-  height: 32px;
+  height: 36px;
   border-radius: 3px;
   color: #aaa69d;
 }
