@@ -5,9 +5,18 @@ type ProductPaginationProps = {
   totalItems: number;
   itemsPerPage: number;
   onPageChange: (page: number) => void;
+  itemLabel?: string;
+  navigationLabel?: string;
 };
 
-export default function ProductPagination({ currentPage, totalItems, itemsPerPage, onPageChange }: ProductPaginationProps) {
+export default function ProductPagination({
+  currentPage,
+  totalItems,
+  itemsPerPage,
+  onPageChange,
+  itemLabel = 'sản phẩm',
+  navigationLabel = 'Chuyển trang sản phẩm',
+}: ProductPaginationProps) {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const firstItem = (currentPage - 1) * itemsPerPage + 1;
   const lastItem = Math.min(currentPage * itemsPerPage, totalItems);
@@ -20,12 +29,12 @@ export default function ProductPagination({ currentPage, totalItems, itemsPerPag
   return (
     <div className="product-pagination">
       <p className="product-pagination__summary" role="status">
-        Hiển thị {firstItem}–{lastItem} trong {totalItems} sản phẩm
+        Hiển thị {firstItem}–{lastItem} trong {totalItems} {itemLabel}
       </p>
       <div
         className="product-pagination__progress"
         role="progressbar"
-        aria-label="Số sản phẩm đã xem đến"
+        aria-label={`Số ${itemLabel} đã xem đến`}
         aria-valuemin={0}
         aria-valuemax={totalItems}
         aria-valuenow={lastItem}
@@ -33,7 +42,7 @@ export default function ProductPagination({ currentPage, totalItems, itemsPerPag
         <span style={{ width: `${(lastItem / totalItems) * 100}%` }} />
       </div>
 
-      <nav className="product-pagination__controls" aria-label="Chuyển trang sản phẩm">
+      <nav className="product-pagination__controls" aria-label={navigationLabel}>
         <button
           className="product-pagination__arrow"
           type="button"
