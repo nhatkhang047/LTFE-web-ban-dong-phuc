@@ -81,26 +81,26 @@ export default function Header() {
           </Link>
 
           {isAuthenticated ? (
-              <Link
-                  to="/tai-khoan"
-                  className="header-icon"
-                  aria-label="Thông tin tài khoản"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="12" cy="7.5" r="3.5" />
-                  <path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2Z" />
-                </svg>
-              </Link>
+            <Link
+              to="/tai-khoan"
+              className="header-icon"
+              aria-label="Thông tin tài khoản"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="7.5" r="3.5" />
+                <path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2Z" />
+              </svg>
+            </Link>
           ) : (
-              <div className="header-auth">
-                <Link to="/dang-nhap" className="header-auth__login">
-                  Đăng nhập
-                </Link>
+            <div className="header-auth">
+              <Link to="/dang-nhap" className="header-auth__login">
+                Đăng nhập
+              </Link>
 
-                <Link to="/dang-ky" className="header-auth__register">
-                  Đăng ký
-                </Link>
-              </div>
+              <Link to="/dang-ky" className="header-auth__register">
+                Đăng ký
+              </Link>
+            </div>
           )}
         </div>
       </div>
