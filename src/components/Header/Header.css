@@ -242,3 +242,23 @@
   background: #34472d;
   color: #fff;
 }
+
+.header-logout {
+  min-height: 36px;
+  padding: 0 15px;
+  border: 1px solid #a65d52;
+  border-radius: 20px;
+  background: transparent;
+  color: #a65d52;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.header-logout:hover {
+  background: #a65d52;
+  color: #fff;
+}

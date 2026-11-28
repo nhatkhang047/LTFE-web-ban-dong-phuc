@@ -1,5 +1,5 @@
 import { type FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFavorites } from '@/features/favorites/FavoritesContext';
 import { useCart } from '@/features/cart/CartContext';
 import { formatCartPrice } from '@/utils/cart';
@@ -9,7 +9,8 @@ import './Header.css';
 export default function Header() {
   const { favorites } = useFavorites();
   const { totalQuantity, totalPrice } = useCart();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
 
   function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -57,14 +58,6 @@ export default function Header() {
             </svg>
             <span className="header-favorites__count" aria-hidden="true">{favorites.length}</span>
           </Link>
-
-          <Link to="/tai-khoan" className="header-icon" aria-label="Thông tin người dùng">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="7.5" r="3.5" />
-              <path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2Z" />
-            </svg>
-          </Link>
-
           <Link
             to="/gio-hang"
             className="header-cart"
@@ -81,26 +74,39 @@ export default function Header() {
           </Link>
 
           {isAuthenticated ? (
-            <Link
-              to="/tai-khoan"
-              className="header-icon"
-              aria-label="Thông tin tài khoản"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="12" cy="7.5" r="3.5" />
-                <path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2Z" />
-              </svg>
-            </Link>
-          ) : (
-            <div className="header-auth">
-              <Link to="/dang-nhap" className="header-auth__login">
-                Đăng nhập
-              </Link>
+              <>
+                <Link
+                    to="/tai-khoan"
+                    className="header-icon"
+                    aria-label="Thông tin tài khoản"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="7.5" r="3.5" />
+                    <path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2Z" />
+                  </svg>
+                </Link>
 
-              <Link to="/dang-ky" className="header-auth__register">
-                Đăng ký
-              </Link>
-            </div>
+                <button
+                    type="button"
+                    className="header-logout"
+                    onClick={() => {
+                      logout();
+                      navigate('/dang-nhap');
+                    }}
+                >
+                  Đăng xuất
+                </button>
+              </>
+          ) : (
+              <div className="header-auth">
+                <Link to="/dang-nhap" className="header-auth__login">
+                  Đăng nhập
+                </Link>
+
+                <Link to="/dang-ky" className="header-auth__register">
+                  Đăng ký
+                </Link>
+              </div>
           )}
         </div>
       </div>
