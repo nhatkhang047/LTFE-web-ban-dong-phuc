@@ -11,6 +11,7 @@ import RegisterPage from '@/pages/RegisterPage';
 import ProfilePage from '@/pages/ProfilePage/ProfilePage';
 import OrdersPage from '@/pages/OrdersPage';
 import OrderDetailPage from '@/pages/OrderDetailPage';
+import SearchPage from "@pages/SearchPage/SearchPage";
 
 
 import '@/styles/main.scss';
@@ -30,6 +31,7 @@ export default function App() {
                 <Route path="/quen-mat-khau" element={<ForgotPasswordPage />} />
             </Route>
             <Route path="/san-pham" element={<ProductsPage />} />
+            <Route path="/tim-kiem" element={<SearchPage />} />
             <Route path="/san-pham/:id" element={<ProductDetailPage />} />
             <Route path="*" element={<Navigate to="/dang-nhap" replace />} />
         </Routes>

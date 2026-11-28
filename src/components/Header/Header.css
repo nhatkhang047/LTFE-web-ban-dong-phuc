@@ -79,13 +79,17 @@
   border-color: #8a9a80;
 }
 
-.header-search button {
+.header-search > button {
   width: 22px;
   height: 28px;
   display: grid;
   flex-shrink: 0;
   place-items: center;
+  padding: 0;
+  border: none;
+  background: transparent;
   color: #a7a59e;
+  cursor: pointer;
 }
 
 .header-search svg {
@@ -261,4 +265,109 @@
 .header-logout:hover {
   background: #a65d52;
   color: #fff;
+}
+
+/* Search suggestions */
+
+.header {
+  position: relative;
+  z-index: 20;
+}
+
+.header-search {
+  position: relative;
+}
+
+.header-search__suggestions {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 1000;
+  width: 340px;
+  max-width: 80vw;
+  padding: 12px;
+  border: 1px solid #eae8e2;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.header-search__suggestion-title {
+  margin: 2px 0 10px;
+  color: #99978e;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.header-search__suggestion-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 4px;
+  border: none;
+  border-bottom: 1px solid #f0eee9;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.header-search__suggestion-item:hover {
+  background: #f7f7f3;
+}
+
+.header-search__suggestion-item img {
+  width: 48px;
+  height: 58px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  object-fit: cover;
+}
+
+.header-search__suggestion-info {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.header-search__suggestion-name {
+  overflow: hidden;
+  color: #42483d;
+  font-size: 12px;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+}
+
+.header-search__suggestion-price {
+  color: #65765b;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.header-search__view-all {
+  width: 100%;
+  margin-top: 8px;
+  padding: 11px 4px;
+  border: none;
+  background: transparent;
+  color: #52634b;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+
+.header-search__view-all:hover {
+  color: #30372d;
+  background: #f7f7f3;
+}
+
+.header-search__no-result {
+  padding: 12px 4px;
+  color: #88867d;
+  font-size: 12px;
+  text-align: center;
 }

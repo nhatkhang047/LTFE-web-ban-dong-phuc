@@ -1,19 +1,61 @@
-import { type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFavorites } from '@/features/favorites/FavoritesContext';
 import { useCart } from '@/features/cart/CartContext';
 import { formatCartPrice } from '@/utils/cart';
 import { useAuth } from '@/features/auth/AuthContext';
+import { catalogProducts } from '@/mock/catalogProducts';
 import './Header.css';
+
+function normalizeSearchText(value: string) {
+  return value
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd')
+      .replace(/Đ/g, 'D')
+      .toLowerCase()
+      .trim();
+}
 
 export default function Header() {
   const { favorites } = useFavorites();
   const { totalQuantity, totalPrice } = useCart();
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
+  const normalizedQuery = normalizeSearchText(searchQuery);
+
+  const searchSuggestions = normalizedQuery
+      ? catalogProducts
+          .filter((product) => {
+            const searchableText = normalizeSearchText(
+                `${product.name} ${product.category} ${product.material}`
+            );
+
+            return searchableText.includes(normalizedQuery);
+          })
+          .slice(0, 5)
+      : [];
 
   function handleSearchSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    const keyword = searchQuery.trim();
+
+    if (!keyword) {
+      return;
+    }
+
+    setIsSuggestionsOpen(false);
+    setSearchQuery('');
+    navigate(`/tim-kiem?q=${encodeURIComponent(keyword)}`);
+  }
+
+  function handleSuggestionClick(productId: number) {
+    setIsSuggestionsOpen(false);
+    setSearchQuery('');
+    navigate(`/san-pham/${productId}`);
   }
 
   return (
@@ -39,12 +81,67 @@ export default function Header() {
               <path d="m15 15 5 5" />
             </svg>
           </button>
+
           <input
-            type="search"
-            name="query"
-            placeholder="Tìm kiếm cashmere, lụa, vải..."
-            aria-label="Tìm kiếm sản phẩm"
+              type="search"
+              name="query"
+              placeholder="Tìm kiếm sản phẩm..."
+              aria-label="Tìm kiếm sản phẩm"
+              value={searchQuery}
+              onChange={(event) => {
+                setSearchQuery(event.target.value);
+                setIsSuggestionsOpen(true);
+              }}
+              onFocus={() => setIsSuggestionsOpen(true)}
+              onBlur={() => setIsSuggestionsOpen(false)}
+              autoComplete="off"
           />
+
+          {isSuggestionsOpen && searchQuery.trim() !== '' && (
+              <div className="header-search__suggestions">
+                {searchSuggestions.length > 0 ? (
+                    <>
+                      <p className="header-search__suggestion-title">
+                        Sản phẩm phù hợp
+                      </p>
+
+                      {searchSuggestions.map((product) => (
+                          <button
+                              key={product.id}
+                              type="button"
+                              className="header-search__suggestion-item"
+                              onMouseDown={(event) => event.preventDefault()}
+                              onClick={() => handleSuggestionClick(product.id)}
+                          >
+                            <img src={product.image} alt={product.name} />
+
+                            <span className="header-search__suggestion-info">
+                <span className="header-search__suggestion-name">
+                  {product.name}
+                </span>
+
+                <span className="header-search__suggestion-price">
+                  {product.price}
+                </span>
+              </span>
+                          </button>
+                      ))}
+
+                      <button
+                          type="submit"
+                          className="header-search__view-all"
+                          onMouseDown={(event) => event.preventDefault()}
+                      >
+                        Xem tất cả kết quả tìm kiếm
+                      </button>
+                    </>
+                ) : (
+                    <p className="header-search__no-result">
+                      Không tìm thấy sản phẩm phù hợp
+                    </p>
+                )}
+              </div>
+          )}
         </form>
 
         <div className="header-actions">
