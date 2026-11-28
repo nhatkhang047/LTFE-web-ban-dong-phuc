@@ -256,6 +256,44 @@
   }
 }
 
+.product-detail-feedback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 14px 16px;
+  border: 1px solid #d8e3cf;
+  border-radius: 6px;
+  background: #eef4e8;
+  color: #526b44;
+  font-size: 0.875rem;
+  line-height: 1.7;
+
+  a {
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  &--error {
+    border-color: #e8d5cb;
+    background: #fbf0e9;
+    color: #9c5f47;
+  }
+}
+
+.product-detail-quantity button:disabled {
+  color: #bbbeb3;
+  cursor: default;
+}
+
+.product-detail-main :is(a, button):focus-visible {
+  outline: 2px solid #718567;
+  outline-offset: 4px;
+}
+
 // Product not found
 
 .product-detail-not-found {
