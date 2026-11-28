@@ -1,4 +1,4 @@
-import type { CartItem, CartProduct } from '@/types/cart';
+import type { CartItem, CartItemInput, CartProduct } from '@/types/cart';
 
 export const cartStorageKey = 'verde-shopping-cart';
 
@@ -29,16 +29,27 @@ function getCartItemId(productId: CartProduct['id'], color: string, size: string
   return JSON.stringify([typeof productId, productId, color, size]);
 }
 
-export function addCartItem(items: CartItem[], product: CartProduct, color: string, size: string): CartItem[] {
-  if (!Number.isSafeInteger(product.priceValue) || product.priceValue < 0) {
+export function addCartItem(items: CartItem[], product: CartProduct, color: string, size: string, quantity = 1): CartItem[] {
+  if (!Number.isSafeInteger(product.priceValue) || product.priceValue < 0 || !Number.isSafeInteger(quantity) || quantity < 1) {
     return items;
   }
 
   const itemId = getCartItemId(product.id, color, size);
   const existingItem = items.find((item) => item.id === itemId);
+  const nextQuantity = (existingItem?.quantity ?? 0) + quantity;
+
+  if (!Number.isSafeInteger(nextQuantity) || !Number.isSafeInteger(product.priceValue * nextQuantity)) {
+    return items;
+  }
 
   if (existingItem) {
-    return updateCartItemQuantity(items, itemId, existingItem.quantity + 1);
+    return items.map((item) => item.id === itemId ? {
+      ...item,
+      name: product.name,
+      image: product.image,
+      unitPrice: product.priceValue,
+      quantity: nextQuantity,
+    } : item);
   }
 
   return [...items, {
@@ -49,8 +60,34 @@ export function addCartItem(items: CartItem[], product: CartProduct, color: stri
     unitPrice: product.priceValue,
     color,
     size,
-    quantity: 1,
+    quantity,
   }];
+}
+
+export function addCartItems(items: CartItem[], entries: readonly CartItemInput[]): CartItem[] {
+  if (entries.length === 0) {
+    throw new Error('Không có sản phẩm để thêm vào giỏ hàng.');
+  }
+
+  let nextItems = items;
+
+  for (const entry of entries) {
+    const updatedItems = addCartItem(nextItems, entry.product, entry.color, entry.size, entry.quantity);
+
+    if (updatedItems === nextItems) {
+      throw new Error('Số lượng hoặc giá sản phẩm không hợp lệ.');
+    }
+
+    nextItems = updatedItems;
+  }
+
+  const totals = getCartTotals(nextItems);
+
+  if (!Number.isSafeInteger(totals.quantity) || !Number.isSafeInteger(totals.price)) {
+    throw new Error('Số lượng hoặc tổng tiền giỏ hàng vượt giới hạn.');
+  }
+
+  return nextItems;
 }
 
 export function updateCartItemQuantity(items: CartItem[], itemId: string, quantity: number): CartItem[] {

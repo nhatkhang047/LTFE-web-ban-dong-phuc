@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import { useFavorites } from '@/features/favorites/FavoritesContext';
+import { useAddressLocations } from '@/hooks/useAddressLocations';
+import type { ShippingAddress as Address } from '@/types/address';
+import { addressesStorageKey, formatShippingAddress, loadSavedAddresses } from '@/utils/addresses';
+import { parseCheckoutDraft } from '@/utils/checkout';
 
 import './ProfilePage.scss';
 
@@ -23,53 +27,16 @@ const initialProfile: ProfileData = {
     gender: '',
 };
 
-type Address = {
-    id: number;
-    name: string;
-    phone: string;
-    province: string;
-    district: string;
-    ward: string;
-    detail: string;
-    note: string;
-    isDefault: boolean;
+type AddressForm = Omit<Address, 'id' | 'province' | 'district' | 'ward' | 'provinceCode' | 'wardCode'> & {
+    provinceCode: string;
+    wardCode: string;
 };
-
-type AddressForm = Omit<Address, 'id' | 'isDefault'> & {
-    isDefault: boolean;
-};
-
-const initialAddresses: Address[] = [
-    {
-        id: 1,
-        name: 'Nhật Quân',
-        phone: '0912345678',
-        province: 'TP. Hồ Chí Minh',
-        district: 'Quận 1',
-        ward: 'Phường Bến Nghé',
-        detail: '123 Nguyễn Huệ',
-        note: '',
-        isDefault: true,
-    },
-    {
-        id: 2,
-        name: 'Nhật Quân',
-        phone: '0987654321',
-        province: 'TP. Hồ Chí Minh',
-        district: 'Thành phố Thủ Đức',
-        ward: 'Phường Thảo Điền',
-        detail: '456 Đường số 2',
-        note: 'Giao hàng giờ hành chính',
-        isDefault: false,
-    },
-];
 
 const emptyAddressForm: AddressForm = {
     name: '',
     phone: '',
-    province: '',
-    district: '',
-    ward: '',
+    provinceCode: '',
+    wardCode: '',
     detail: '',
     note: '',
     isDefault: false,
@@ -78,30 +45,51 @@ const emptyAddressForm: AddressForm = {
 
 export default function ProfilePage() {
     const { favorites } = useFavorites();
+    const location = useLocation();
+    const returnToCheckout = location.state?.returnToCheckout === true;
+    const checkoutDraft = parseCheckoutDraft(location.state?.checkoutDraft);
+    const [checkoutAddressId, setCheckoutAddressId] = useState(checkoutDraft.selectedAddressId);
     const avatarInputRef = useRef<HTMLInputElement>(null);
 
     const [profile, setProfile] = useState(initialProfile);
     const [editing, setEditing] = useState(false);
     const [avatar, setAvatar] = useState('');
 
-    const [addresses, setAddresses] = useState<Address[]>(() => {
-        const savedAddresses = localStorage.getItem('verde_addresses');
-
-        return savedAddresses
-            ? JSON.parse(savedAddresses) as Address[]
-            : initialAddresses;
-    });
+    const [addresses, setAddresses] = useState<Address[]>(loadSavedAddresses);
 
     const [addressFormOpen, setAddressFormOpen] = useState(false);
     const [editingAddressId, setEditingAddressId] = useState<number | null>(null);
     const [addressForm, setAddressForm] = useState<AddressForm>(emptyAddressForm);
+    const [previousAddressLocation, setPreviousAddressLocation] = useState('');
+    const [addressFormError, setAddressFormError] = useState('');
+    const {
+        provinces, provincesLoading, provincesError,
+        wards, wardsLoading, wardsError, retryProvinces, retryWards,
+    } = useAddressLocations(addressFormOpen, addressForm.provinceCode);
+    const selectedProvince = provinces.find((province) => String(province.code) === addressForm.provinceCode);
+    const selectedWard = wards.find((ward) => String(ward.code) === addressForm.wardCode);
+    const addressLocationsReady = Boolean(selectedProvince && selectedWard)
+        && !provincesLoading && !wardsLoading && !provincesError && !wardsError;
+    const fullAddress = [addressForm.detail.trim(), selectedWard?.name, selectedProvince?.name]
+        .filter(Boolean).join(', ');
+
     useEffect(() => {
         document.title = 'Thông tin cá nhân | VERDE';
     }, []);
 
     useEffect(() => {
-        localStorage.setItem('verde_addresses', JSON.stringify(addresses));
+        localStorage.setItem(addressesStorageKey, JSON.stringify(addresses));
     }, [addresses]);
+
+    useEffect(() => {
+        if (location.hash === '#dia-chi') {
+            document.getElementById('dia-chi')?.scrollIntoView({ block: 'start' });
+        }
+
+        if (returnToCheckout && location.state?.openAddressForm === true) {
+            openAddAddress();
+        }
+    }, [location.key]);
 
     function handleAvatarChange(event: ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
@@ -130,6 +118,8 @@ export default function ProfilePage() {
     function openAddAddress() {
         setEditingAddressId(null);
         setAddressForm(emptyAddressForm);
+        setPreviousAddressLocation('');
+        setAddressFormError('');
         setAddressFormOpen(true);
     }
 
@@ -139,14 +129,17 @@ export default function ProfilePage() {
         setAddressForm({
             name: address.name,
             phone: address.phone,
-            province: address.province,
-            district: address.district,
-            ward: address.ward,
+            provinceCode: address.provinceCode ?? '',
+            wardCode: address.wardCode ?? '',
             detail: address.detail,
             note: address.note,
             isDefault: address.isDefault,
         });
 
+        setPreviousAddressLocation(!address.provinceCode || !address.wardCode || address.district
+            ? [address.ward, address.district, address.province].filter(Boolean).join(', ')
+            : '');
+        setAddressFormError('');
         setAddressFormOpen(true);
     }
 
@@ -154,17 +147,36 @@ export default function ProfilePage() {
         field: keyof AddressForm,
         value: string | boolean
     ) {
+        setAddressFormError('');
         setAddressForm((previous) => ({
             ...previous,
             [field]: value,
+            ...(field === 'provinceCode' ? { wardCode: '' } : {}),
         }));
     }
 
     function handleAddressSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
+        if (!addressLocationsReady || !selectedProvince || !selectedWard) {
+            setAddressFormError('Vui lòng chọn tỉnh / thành phố và phường / xã hợp lệ.');
+            return;
+        }
+
+        if (!addressForm.name.trim() || !addressForm.detail.trim()) {
+            setAddressFormError('Vui lòng nhập họ tên người nhận và địa chỉ cụ thể.');
+            return;
+        }
+
         const newAddress: Address = {
             ...addressForm,
+            name: addressForm.name.trim(),
+            phone: addressForm.phone.trim(),
+            province: selectedProvince.name,
+            district: '',
+            ward: selectedWard.name,
+            detail: addressForm.detail.trim(),
+            note: addressForm.note.trim(),
             id: editingAddressId ?? Date.now(),
             isDefault: addressForm.isDefault || addresses.length === 0,
         };
@@ -195,6 +207,7 @@ export default function ProfilePage() {
         });
 
         setAddressFormOpen(false);
+        setCheckoutAddressId(newAddress.id);
         setEditingAddressId(null);
         setAddressForm(emptyAddressForm);
     }
@@ -476,6 +489,15 @@ export default function ProfilePage() {
                         </section>
 
                         <section className="profile-panel address-management" id="dia-chi">
+                            {returnToCheckout && (
+                                <Link
+                                    className="address-checkout-return"
+                                    to="/thanh-toan"
+                                    state={{ checkoutDraft: { ...checkoutDraft, selectedAddressId: checkoutAddressId } }}
+                                >
+                                    Quay lại thanh toán
+                                </Link>
+                            )}
                             <div className="address-management__heading">
                                 <div>
                                     <span className="profile-eyebrow">THÔNG TIN GIAO NHẬN</span>
@@ -518,8 +540,7 @@ export default function ProfilePage() {
                                             </div>
 
                                             <p className="address-card__detail">
-                                                {address.detail}, {address.ward}, {address.district},{' '}
-                                                {address.province}
+                                                {formatShippingAddress(address)}
                                             </p>
 
                                             {address.note && (
@@ -581,6 +602,12 @@ export default function ProfilePage() {
                                     </div>
 
                                     <form onSubmit={handleAddressSubmit}>
+                                        {previousAddressLocation && (
+                                            <p className="address-form-notice">
+                                                Địa chỉ đã lưu: {previousAddressLocation}. Vui lòng chọn lại tỉnh / thành phố
+                                                và phường / xã theo danh sách hiện hành để cập nhật.
+                                            </p>
+                                        )}
                                         <div className="address-form-grid">
                                             <div className="address-form-field">
                                                 <label htmlFor="address-name">Họ và tên người nhận *</label>
@@ -611,39 +638,54 @@ export default function ProfilePage() {
 
                                             <div className="address-form-field">
                                                 <label htmlFor="address-province">Tỉnh / Thành phố *</label>
-                                                <input
+                                                <select
                                                     id="address-province"
-                                                    value={addressForm.province}
+                                                    value={addressForm.provinceCode}
                                                     onChange={(event) =>
-                                                        handleAddressChange('province', event.target.value)}
-                                                    placeholder="Nhập tỉnh / thành phố"
+                                                        handleAddressChange('provinceCode', event.target.value)}
+                                                    disabled={provincesLoading || Boolean(provincesError)}
+                                                    aria-busy={provincesLoading}
+                                                    aria-describedby={provincesError ? 'address-province-error' : undefined}
                                                     required
-                                                />
-                                            </div>
-
-                                            <div className="address-form-field">
-                                                <label htmlFor="address-district">Quận / Huyện *</label>
-                                                <input
-                                                    id="address-district"
-                                                    value={addressForm.district}
-                                                    onChange={(event) =>
-                                                        handleAddressChange('district', event.target.value)
-                                                    }
-                                                    placeholder="Nhập quận / huyện"
-                                                    required
-                                                />
+                                                >
+                                                    <option value="">{provincesLoading ? 'Đang tải tỉnh / thành phố...' : 'Chọn tỉnh / thành phố'}</option>
+                                                    {provinces.map((province) => (
+                                                        <option key={province.code} value={String(province.code)}>{province.name}</option>
+                                                    ))}
+                                                </select>
+                                                {provincesError && (
+                                                    <div className="address-location-error" id="address-province-error" role="alert">
+                                                        <p>{provincesError}</p>
+                                                        <button type="button" onClick={retryProvinces}>Thử lại</button>
+                                                    </div>
+                                                )}
                                             </div>
 
                                             <div className="address-form-field">
                                                 <label htmlFor="address-ward">Phường / Xã *</label>
-                                                <input
+                                                <select
                                                     id="address-ward"
-                                                    value={addressForm.ward}
+                                                    value={addressForm.wardCode}
                                                     onChange={(event) =>
-                                                        handleAddressChange('ward', event.target.value)}
-                                                    placeholder="Nhập phường / xã"
+                                                        handleAddressChange('wardCode', event.target.value)}
+                                                    disabled={!selectedProvince || provincesLoading || wardsLoading || Boolean(wardsError)}
+                                                    aria-busy={wardsLoading}
+                                                    aria-describedby={wardsError ? 'address-ward-error' : undefined}
                                                     required
-                                                />
+                                                >
+                                                    <option value="">
+                                                        {!selectedProvince ? 'Chọn tỉnh / thành phố trước' : wardsLoading ? 'Đang tải phường / xã...' : 'Chọn phường / xã'}
+                                                    </option>
+                                                    {wards.map((ward) => (
+                                                        <option key={ward.code} value={String(ward.code)}>{ward.name}</option>
+                                                    ))}
+                                                </select>
+                                                {wardsError && (
+                                                    <div className="address-location-error" id="address-ward-error" role="alert">
+                                                        <p>{wardsError}</p>
+                                                        <button type="button" onClick={retryWards}>Thử lại</button>
+                                                    </div>
+                                                )}
                                             </div>
 
                                             <div className="address-form-field address-form-field--full">
@@ -669,6 +711,13 @@ export default function ProfilePage() {
                                                     rows={3}
                                                 />
                                             </div>
+
+                                            {addressLocationsReady && addressForm.detail.trim() && (
+                                                <div className="address-form-preview address-form-field--full" aria-live="polite">
+                                                    <strong>Địa chỉ giao hàng</strong>
+                                                    <p>{fullAddress}</p>
+                                                </div>
+                                            )}
                                         </div>
 
                                         <label className="address-default-checkbox">
@@ -681,6 +730,8 @@ export default function ProfilePage() {
                                             Đặt làm địa chỉ mặc định
                                         </label>
 
+                                        {addressFormError && <p className="address-form-error" role="alert">{addressFormError}</p>}
+
                                         <div className="address-modal__actions">
                                             <button
                                                 type="button"
@@ -689,7 +740,7 @@ export default function ProfilePage() {
                                                 Hủy
                                             </button>
 
-                                            <button type="submit" className="address-save-button">
+                                            <button type="submit" className="address-save-button" disabled={!addressLocationsReady}>
                                                 {editingAddressId !== null
                                                     ? 'Lưu thay đổi'
                                                     : 'Thêm địa chỉ'}

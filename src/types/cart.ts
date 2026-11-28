@@ -5,6 +5,13 @@ export type CartProduct = {
   priceValue: number;
 };
 
+export type CartItemInput = {
+  product: CartProduct;
+  color: string;
+  size: string;
+  quantity: number;
+};
+
 export type CartItem = {
   id: string;
   productId: string | number;

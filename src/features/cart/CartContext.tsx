@@ -1,7 +1,8 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import type { CartItem, CartProduct } from '@/types/cart';
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+import type { CartItem, CartItemInput, CartProduct } from '@/types/cart';
 import {
   addCartItem,
+  addCartItems,
   cartStorageKey,
   getCartTotals,
   parseStoredCart,
@@ -14,6 +15,7 @@ type CartContextValue = {
   totalQuantity: number;
   totalPrice: number;
   addItem: (product: CartProduct, color: string, size: string) => void;
+  addItems: (entries: readonly CartItemInput[]) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   removeItem: (itemId: string) => void;
 };
@@ -30,6 +32,7 @@ function loadCart(): CartItem[] {
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(loadCart);
+  const itemsRef = useRef(items);
   const totals = getCartTotals(items);
 
   useEffect(() => {
@@ -40,16 +43,33 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [items]);
 
+  function commitItems(nextItems: CartItem[]) {
+    itemsRef.current = nextItems;
+    setItems(nextItems);
+  }
+
   function addItem(product: CartProduct, color: string, size: string) {
-    setItems((previousItems) => addCartItem(previousItems, product, color, size));
+    commitItems(addCartItem(itemsRef.current, product, color, size));
   }
 
   function updateQuantity(itemId: string, quantity: number) {
-    setItems((previousItems) => updateCartItemQuantity(previousItems, itemId, quantity));
+    commitItems(updateCartItemQuantity(itemsRef.current, itemId, quantity));
+  }
+
+  function addItems(entries: readonly CartItemInput[]) {
+    const nextItems = addCartItems(itemsRef.current, entries);
+
+    try {
+      window.localStorage.setItem(cartStorageKey, JSON.stringify(nextItems));
+    } catch {
+      throw new Error('Không thể lưu giỏ hàng. Vui lòng thử lại.');
+    }
+
+    commitItems(nextItems);
   }
 
   function removeItem(itemId: string) {
-    setItems((previousItems) => removeCartItem(previousItems, itemId));
+    commitItems(removeCartItem(itemsRef.current, itemId));
   }
 
   return (
@@ -58,6 +78,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       totalQuantity: totals.quantity,
       totalPrice: totals.price,
       addItem,
+      addItems,
       updateQuantity,
       removeItem,
     }}>

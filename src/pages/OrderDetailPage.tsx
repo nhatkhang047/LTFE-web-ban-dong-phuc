@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
+import OrderActions from '@/components/OrderActions/OrderActions';
 import { orderPaymentMethodLabels, orderPaymentStatusLabels, orderStatusLabels } from '@/constants/orders';
 import { useOrders } from '@/features/orders/OrdersContext';
 import { formatCartPrice } from '@/utils/cart';
@@ -46,7 +47,10 @@ export default function OrderDetailPage() {
                     <p>Ngày đặt: <time dateTime={order.createdAt}>{formatOrderDate(order.createdAt)}</time></p>
                   </div>
                 </div>
-                <Link className="order-detail-back" to="/don-hang">Quay lại danh sách</Link>
+                <div className="order-detail-heading__actions">
+                  <Link className="order-detail-back" to="/don-hang">Quay lại danh sách</Link>
+                  <OrderActions order={order} />
+                </div>
               </div>
 
               {order.status === 'cancelled' && (

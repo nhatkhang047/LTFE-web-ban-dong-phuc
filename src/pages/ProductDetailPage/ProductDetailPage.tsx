@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ProductCard from '@/components/ProductCard';
+import { useCart } from '@/features/cart/CartContext';
 
 import { catalogProducts } from '@/mock/catalogProducts';
 
@@ -33,17 +34,27 @@ const mockReviews = [
     },
 ];
 
+type CartFeedback = {
+    type: 'success' | 'error';
+    message: string;
+    field?: 'size';
+};
+
 export default function ProductDetailPage() {
     const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
+    const { addItems } = useCart();
+    const sizesRef = useRef<HTMLDivElement>(null);
 
     const product = catalogProducts.find(
         (item) => item.id === Number(id)
     );
 
-    const [selectedColor, setSelectedColor] = useState('');
+    const [selectedColor, setSelectedColor] = useState(product?.colors[0] ?? '');
     const [selectedSize, setSelectedSize] = useState('');
     const [quantity, setQuantity] = useState(1);
     const [selectedImage, setSelectedImage] = useState('');
+    const [cartFeedback, setCartFeedback] = useState<CartFeedback | null>(null);
 
     useEffect(() => {
         if (product) {
@@ -51,6 +62,7 @@ export default function ProductDetailPage() {
             setSelectedSize('');
             setQuantity(1);
             setSelectedImage(product.images[0] || product.image);
+            setCartFeedback(null);
         }
     }, [product]);
 
@@ -88,28 +100,70 @@ export default function ProductDetailPage() {
         })
         .slice(0, 4);
 
-    const handleAddToCart = () => {
-        if (!selectedSize) {
-            alert('Vui lòng chọn kích thước sản phẩm!');
+    function addSelectedProductToCart() {
+        if (!product) {
+            return false;
+        }
+
+        if (product.sizes.length > 0 && !product.sizes.includes(selectedSize)) {
+            setCartFeedback({ type: 'error', field: 'size', message: 'Vui lòng chọn kích thước sản phẩm.' });
+            sizesRef.current?.querySelector<HTMLButtonElement>('button')?.focus();
+            return false;
+        }
+
+        if (product.colors.length > 0 && !product.colors.includes(selectedColor)) {
+            setCartFeedback({ type: 'error', message: 'Vui lòng chọn màu sắc sản phẩm.' });
+            return false;
+        }
+
+        try {
+            addItems([{
+                product: {
+                    id: product.id,
+                    name: product.name,
+                    image: product.image,
+                    priceValue: product.priceValue,
+                },
+                color: selectedColor,
+                size: selectedSize,
+                quantity,
+            }]);
+            setCartFeedback({ type: 'success', message: `Đã thêm ${quantity} sản phẩm vào giỏ hàng.` });
+            return true;
+        } catch (error) {
+            setCartFeedback({ type: 'error', message: error instanceof Error ? error.message : 'Không thể thêm vào giỏ hàng. Vui lòng thử lại.' });
+            return false;
+        }
+    }
+
+    function handleAddToCart() {
+        addSelectedProductToCart();
+    }
+
+    function handleBuyNow() {
+        if (addSelectedProductToCart()) {
+            navigate('/thanh-toan');
+        }
+    }
+
+    function handleColorChange(color: string) {
+        setSelectedColor(color);
+        setCartFeedback(null);
+    }
+
+    function handleSizeChange(size: string) {
+        setSelectedSize(size);
+        setCartFeedback(null);
+    }
+
+    function handleQuantityChange(nextQuantity: number) {
+        if (!Number.isSafeInteger(nextQuantity) || nextQuantity < 1) {
             return;
         }
 
-        alert(
-            `Đã thêm ${product.name} vào giỏ hàng!\n` +
-            `Màu sắc: ${selectedColor}\n` +
-            `Kích thước: ${selectedSize}\n` +
-            `Số lượng: ${quantity}`
-        );
-    };
-
-    const handleBuyNow = () => {
-        if (!selectedSize) {
-            alert('Vui lòng chọn kích thước sản phẩm!');
-            return;
-        }
-
-        alert('Chức năng mua hàng đang được minh họa.');
-    };
+        setQuantity(nextQuantity);
+        setCartFeedback(null);
+    }
 
     return (
         <div className="product-detail-page">
@@ -199,7 +253,8 @@ export default function ProductDetailPage() {
                                                 : ''
                                         }
                                         style={{ backgroundColor: color }}
-                                        onClick={() => setSelectedColor(color)}
+                                        onClick={() => handleColorChange(color)}
+                                        aria-pressed={selectedColor === color}
                                         aria-label={`Chọn màu ${color}`}
                                         title={color}
                                     />
@@ -208,9 +263,15 @@ export default function ProductDetailPage() {
                         </div>
 
                         <div className="product-detail-option">
-                            <h3>Kích thước:</h3>
+                            <h3 id="product-size-label">Kích thước:</h3>
 
-                            <div className="product-detail-sizes">
+                            <div
+                                className="product-detail-sizes"
+                                ref={sizesRef}
+                                role="group"
+                                aria-labelledby="product-size-label"
+                                aria-describedby={cartFeedback?.field === 'size' ? 'product-cart-feedback' : undefined}
+                            >
                                 {product.sizes.map((size) => (
                                     <button
                                         key={size}
@@ -220,7 +281,8 @@ export default function ProductDetailPage() {
                                                 ? 'active'
                                                 : ''
                                         }
-                                        onClick={() => setSelectedSize(size)}
+                                        onClick={() => handleSizeChange(size)}
+                                        aria-pressed={selectedSize === size}
                                     >
                                         {size}
                                     </button>
@@ -234,22 +296,19 @@ export default function ProductDetailPage() {
                             <div className="product-detail-quantity">
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        setQuantity((prev) =>
-                                            Math.max(1, prev - 1)
-                                        )
-                                    }
+                                    aria-label="Giảm số lượng"
+                                    disabled={quantity <= 1}
+                                    onClick={() => handleQuantityChange(quantity - 1)}
                                 >
                                     −
                                 </button>
 
-                                <span>{quantity}</span>
+                                <span aria-live="polite">{quantity}</span>
 
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        setQuantity((prev) => prev + 1)
-                                    }
+                                    aria-label="Tăng số lượng"
+                                    onClick={() => handleQuantityChange(quantity + 1)}
                                 >
                                     +
                                 </button>
@@ -273,6 +332,17 @@ export default function ProductDetailPage() {
                                 Mua ngay
                             </button>
                         </div>
+
+                        {cartFeedback && (
+                            <div
+                                id="product-cart-feedback"
+                                className={`product-detail-feedback product-detail-feedback--${cartFeedback.type}`}
+                                role={cartFeedback.type === 'error' ? 'alert' : 'status'}
+                            >
+                                <p>{cartFeedback.message}</p>
+                                {cartFeedback.type === 'success' && <Link to="/gio-hang">Xem giỏ hàng</Link>}
+                            </div>
+                        )}
 
                         <div className="product-detail-policy">
                             <p>✓ Chất liệu chất lượng</p>
@@ -332,6 +402,8 @@ export default function ProductDetailPage() {
                                     name={item.name}
                                     price={item.price}
                                     colors={item.colors}
+                                    sizes={item.sizes}
+                                    priceValue={item.priceValue}
                                 />
                             ))}
                         </div>

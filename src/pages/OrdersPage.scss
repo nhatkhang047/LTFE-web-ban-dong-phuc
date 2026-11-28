@@ -229,10 +229,11 @@
 
   &__actions {
     display: flex;
-    align-items: center;
-    gap: 24px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
 
-    p {
+    > p {
       display: flex;
       align-items: center;
       gap: 14px;
@@ -240,7 +241,7 @@
       font-size: 0.875rem;
     }
 
-    strong {
+    > p > strong {
       color: #43563a;
       font-size: 1.25rem;
       font-weight: 600;

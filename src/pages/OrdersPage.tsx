@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
+import OrderActions from '@/components/OrderActions/OrderActions';
 import ProductPagination from '@/components/ProductPagination/ProductPagination';
 import { orderStatusFilters, orderStatusLabels } from '@/constants/orders';
 import { useOrders } from '@/features/orders/OrdersContext';
@@ -16,6 +17,7 @@ export default function OrdersPage() {
   const [selectedStatus, setSelectedStatus] = useState<OrderStatusFilter>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPage, setSelectedPage] = useState(1);
+  const [actionMessage, setActionMessage] = useState('');
   const listRef = useRef<HTMLElement>(null);
   const ordersPerPage = 8;
   const filteredOrders = getFilteredOrders(orders, selectedStatus, searchQuery);
@@ -29,11 +31,13 @@ export default function OrdersPage() {
   }, []);
 
   function handleStatusChange(status: OrderStatusFilter) {
+    setActionMessage('');
     setSelectedStatus(status);
     setSelectedPage(1);
   }
 
   function handleSearchChange(value: string) {
+    setActionMessage('');
     setSearchQuery(value);
     setSelectedPage(1);
   }
@@ -44,6 +48,7 @@ export default function OrdersPage() {
   }
 
   function resetFilters() {
+    setActionMessage('');
     setSelectedStatus('all');
     setSearchQuery('');
     setSelectedPage(1);
@@ -81,6 +86,7 @@ export default function OrdersPage() {
           </div>
 
           {storageError && <p className="orders-error" role="alert">{storageError}</p>}
+          {actionMessage && <p className="order-action-notice" role="status">{actionMessage}</p>}
 
           <div className="orders-status-tabs" role="group" aria-label="Lọc trạng thái đơn hàng">
             {orderStatusFilters.map((filter) => {
@@ -167,13 +173,15 @@ export default function OrdersPage() {
                         </div>
                         <div className="order-card__actions">
                           <p>Tổng tiền <strong>{formatCartPrice(order.totalAmount)}</strong></p>
-                          <Link
-                            className="order-card__detail-link"
-                            to={`/don-hang/${encodeURIComponent(order.id)}`}
-                            aria-label={`Xem chi tiết đơn ${order.code}`}
-                          >
-                            Xem chi tiết
-                          </Link>
+                          <OrderActions order={order} onCancelled={(code) => setActionMessage(`Đã hủy đơn ${code}.`)}>
+                            <Link
+                              className="order-card__detail-link"
+                              to={`/don-hang/${encodeURIComponent(order.id)}`}
+                              aria-label={`Xem chi tiết đơn ${order.code}`}
+                            >
+                              Xem chi tiết
+                            </Link>
+                          </OrderActions>
                         </div>
                       </div>
                     </article>
