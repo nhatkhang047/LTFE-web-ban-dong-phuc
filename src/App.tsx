@@ -4,6 +4,7 @@ import ProductDetailPage from '@/pages/ProductDetailPage/ProductDetailPage';
 import ForgotPasswordPage from '@/pages/ForgotPasswordPage';
 import FavoritesPage from '@/pages/FavoritesPage';
 import CartPage from '@/pages/CartPage';
+import CheckoutPage from '@/pages/CheckoutPage';
 import HomePage from '@/pages/HomePage';
 import LoginPage from '@/pages/LoginPage';
 import ProductsPage from '@/pages/ProductsPage';
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/tai-khoan" element={<ProfilePage />} />
             <Route path="/yeu-thich" element={<FavoritesPage />} />
             <Route path="/gio-hang" element={<CartPage />} />
+            <Route path="/thanh-toan" element={<CheckoutPage />} />
             <Route path="/don-hang" element={<OrdersPage />} />
             <Route path="/don-hang/:orderId" element={<OrderDetailPage />} />
             <Route element={<AuthLayout />}>

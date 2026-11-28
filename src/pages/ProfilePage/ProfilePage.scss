@@ -576,6 +576,16 @@
   }
 }
 
+.address-checkout-return {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: #52634b;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .address-list {
   display: flex;
   flex-direction: column;

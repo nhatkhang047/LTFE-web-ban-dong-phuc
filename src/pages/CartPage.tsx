@@ -112,7 +112,7 @@ export default function CartPage() {
                   <div className="cart-summary__total"><dt>Tổng tiền sản phẩm</dt><dd aria-live="polite">{formatCartPrice(totalPrice)}</dd></div>
                 </dl>
                 <p>Chưa bao gồm phí vận chuyển.</p>
-                <Link className="cart-button" to="/san-pham">Tiếp tục mua sắm</Link>
+                <Link className="cart-button" to="/thanh-toan">Tiến hành thanh toán</Link>
               </aside>
             </div>
           ) : (

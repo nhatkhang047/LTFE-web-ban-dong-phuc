@@ -142,7 +142,7 @@ export default function ProductDetailPage() {
 
     function handleBuyNow() {
         if (addSelectedProductToCart()) {
-            navigate('/gio-hang');
+            navigate('/thanh-toan');
         }
     }
 
