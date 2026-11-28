@@ -284,11 +284,11 @@ export default function ProfilePage() {
                         <section className="profile-menu">
                             <h3>MỤC LỤC QUẢN LÝ</h3>
 
-                            <a href="#don-hang">
+                            <Link to="/don-hang">
                                 <span className="profile-menu__icon">▣</span>
                                 <span>Đơn hàng</span>
                                 <small>19 mục</small>
-                            </a>
+                            </Link>
 
                             <a href="#dia-chi">
                                 <span className="profile-menu__icon">♧</span>
@@ -301,7 +301,7 @@ export default function ProfilePage() {
                             <Link to="/yeu-thich">
                                 <span className="profile-menu__icon">♡</span>
                                 <span>Danh sách theo dõi</span>
-                                <small>{favorites.length} quyển</small>
+                                <small>{favorites.length}</small>
                             </Link>
 
                             <a href="#cai-dat" className="active">
@@ -470,9 +470,9 @@ export default function ProfilePage() {
                             <div>
                                 <span className="profile-eyebrow">LỊCH SỬ MUA SẮM</span>
                                 <h2>Đơn hàng của tôi</h2>
-                                <p>Bạn có 19 đơn hàng trong tài khoản (dữ liệu minh họa).</p>
+                                <p>Theo dõi trạng thái và xem lại lịch sử các đơn hàng của bạn.</p>
                             </div>
-                            <Link to="/gio-hang">Xem giỏ hàng →</Link>
+                            <Link to="/don-hang">Xem tất cả đơn hàng →</Link>
                         </section>
 
                         <section className="profile-panel address-management" id="dia-chi">
